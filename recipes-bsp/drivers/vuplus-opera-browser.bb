@@ -3,18 +3,18 @@ PRIORITY = "optional"
 LICENSE = "CLOSED"
 SECTION = "base"
 
-DEPENDS = "tslib mpfr gmp"
-RREPLACES_{$PN} = "vuplus-opera-browser-util"
-RCONFLICTS_{$PN} = "vuplus-opera-browser-util"
+DEPENDS = "mpfr gmp"
+RREPLACES_${PN} = "vuplus-opera-browser-util"
+RCONFLICTS_${PN} = "vuplus-opera-browser-util"
 PACKAGES = "${PN}"
 
-SRC_DATE = "20140519_1"
-PR = "r9_${SRC_DATE}"
+SRC_DATE = "20140725_0"
+PR = "r1_${SRC_DATE}"
 
 SRC_URI = ""
 SRC_FILE = "opera-hbbtv_${SRC_DATE}.tar.gz"
-SRC_URI[md5sum] = "e2f6220403c2a946f8f9583aa084bc60"
-SRC_URI[sha256sum] = "f8ec235ca0368bdcaaac2b61634204e2c41558d23d8d7d43ff4f02edc00d6ddb"
+SRC_URI[md5sum] = "1ba7691c826856431c0dba1d4251f32e"
+SRC_URI[sha256sum] = "0bc932152a3eda86c3e871a87ea58e0a8693aa707b93c8cf174c29663ec00d5c"
 
 S = "${WORKDIR}/opera-hbbtv"
 
@@ -32,31 +32,41 @@ do_unpack() {
        tar xvfz ${SRC_FILE}
 }
 
+do_compile() {
+}
+
 do_install() {
 	install -d ${D}/usr/local/hbb-browser
 	cp -avR ${S}/opera/* ${D}/usr/local/hbb-browser/
-# workaround for slightly broken startup script
-	sed -i -e '1,2d' ${D}/usr/local/hbb-browser/launcher
-
-	install -d ${D}/etc
-	cp -avR ${S}/dfb/etc/* ${D}/etc/
-
-	install -d ${D}/usr/bin
-	cp -avR ${S}/dfb/usr/bin/* ${D}/usr/bin/
 
 	install -d ${D}/usr/lib
 	cp -avR ${S}/dfb/usr/lib/* ${D}/usr/lib/
-
-	install -d ${D}/usr/share
-	cp -avR ${S}/dfb/usr/share/* ${D}/usr/share/
-
-	install -d ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
-	cp -avR ${S}/plugin/* ${D}/usr/lib/enigma2/python/Plugins/Extensions/HbbTV
 }
 
 do_package_qa() {
 }
 
-INHIBIT_PACKAGE_STRIP = "1"
+sysroot_stage_all() {
+}
 
-FILES_${PN} = "/usr/lib /usr/local /usr/share /usr/bin /etc "
+INHIBIT_PACKAGE_STRIP = "1"
+PRIVATE_LIBS_${PN} = "libopera_hbbtv.so \
+libdsmcc.so \
+libdirect-1.4.so.6 \
+libdirectfb-1.4.so.6 \
+libfusion-1.4.so.6 \
+libdirectfbwm_default.so \
+libdirectfb_linux_input.so \
+libdirectfb_devmem.so \
+libdirectfb_dummy.so \
+libdirectfb_fbdev.so \
+libidirectfbfont_dgiff.so \
+libidirectfbvideoprovider_v4l.so \
+libidirectfbvideoprovider_gif.so \
+libidirectfbimageprovider_dfiff.so \
+libidirectfbimageprovider_gif.so \
+libidirectfbimageprovider_jpeg.so \
+libicoreresourcemanager_test.so \
+libdirectfb_vuplus.so"
+
+FILES_${PN} = "/usr/lib /usr/local"

@@ -12,12 +12,13 @@ inherit gitpkgv
  
 PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"
-PR = "r4"
+PR = "r5"
 BRANCH = "vuplus_experimental"
 
 SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
 	file://vuplus_enigma2_packages.patch;striplevel=1 \
 	file://enigma2-plugin-systemplugins-firmwareupgrade_20130723.patch;striplevel=1;apply=yes \
+	file://enigma2-plugin-systemplugins-firmwareupgrade_add_solose_20140731.patch;striplevel=1;apply=yes \
 	file://enigma2-plugin-systemplugins-manualfancontrol_20130723.patch;striplevel=1;apply=yes \
 	file://enigma2-plugin-systemplugins-remotecontrolcode_20130723.patch;striplevel=1;apply=yes \
 "

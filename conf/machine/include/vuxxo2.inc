@@ -29,7 +29,7 @@ DEFAULTTUNE = "mips32el"
 
 DVBMEDIASINK_CONFIG = "--with-pcm"
 
-PREFERRED_VERSION_linux-${MACHINE} = "3.3.8"
+PREFERRED_VERSION_linux-${MACHINE} = "3.13.5"
 PREFERRED_VERSION_linux-libc-headers = "3.3"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-${MACHINE}"
@@ -40,7 +40,7 @@ PREFERRED_PROVIDER_virtual/blindscan-dvbs = "vuplus-blindscan-utils-${MACHINE}"
 IMAGE_FSTYPES ?= "ubi"
 
 UBI_VOLNAME = "rootfs"
-MKUBIFS_ARGS = "-m 2048 -e 126976 -c 4096"
+MKUBIFS_ARGS = "-m 2048 -e 126976 -c ${MKFS_UBI_MAX_ERASE_BLK_COUNT}"
 UBINIZE_ARGS = "-m 2048 -p 128KiB"
 
 IMAGEDIR ?= "${MACHINE}"
@@ -58,7 +58,7 @@ IMAGE_CMD_ubi_append = " \
 	cp ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.ubi ${DEPLOY_DIR_IMAGE}/vuplus/${UPDATE_DIR}/root_cfe_auto.bin; \
 	cp ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.vmlinux.gz ${DEPLOY_DIR_IMAGE}/vuplus/${UPDATE_DIR}/kernel_cfe_auto.bin; \
 	cp ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.initrd_cfe_auto.bin ${DEPLOY_DIR_IMAGE}/vuplus/${UPDATE_DIR}/initrd_cfe_auto.bin; \
-	touch ${DEPLOY_DIR_IMAGE}/vuplus/${UPDATE_DIR}/reboot.update; \
+	touch ${DEPLOY_DIR_IMAGE}/vuplus/${UPDATE_DIR}/${FORCE_REBOOT_OPTION}.update; \
 	cd ${DEPLOY_DIR_IMAGE}; \
 	zip ${IMAGE_NAME}_usb.zip vuplus/${UPDATE_DIR}/*; \
 	rm -rf vuplus; \
@@ -66,6 +66,6 @@ IMAGE_CMD_ubi_append = " \
 
 TARGET_FPU = "hard"
 
-MACHINE_FEATURES += "alsa usbhost wlan kernelwifi externalwifi 3dtv switchoff osdposition hdmicec fan transcoding"
+MACHINE_FEATURES += "alsa usbhost wlan kernelwifi externalwifi 3dtv switchoff osdposition hdmicec fan"
 
 require conf/machine/include/tune-mips32.inc
