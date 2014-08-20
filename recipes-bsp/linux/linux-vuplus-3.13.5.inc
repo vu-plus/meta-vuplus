@@ -2,7 +2,7 @@ DESCRIPTION = "Linux kernel for ${MACHINE}"
 LICENSE = "GPL"
 SECTION = "kernel"
 KV = "3.13.5"
-PR_INC = ".0"
+PR_INC = ".1"
 
 SRC_URI[md5sum] = "19e9956653437b99b4fa6ec3e16a3e99"
 SRC_URI[sha256sum] = "ef7fb307582ff243aacff8a13025fe028634aaf650ada309991ae03622962f61"
@@ -14,6 +14,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-vuplus-${KV}:"
 SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-${KV}.tar.bz2 \
 	file://nfs-max-rwsize-8k.patch \
 	file://rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
+	file://linux-tcp_output.patch \
 	file://${MACHINE}_defconfig \
 	"
 
