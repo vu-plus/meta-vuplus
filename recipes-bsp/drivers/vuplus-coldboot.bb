@@ -2,7 +2,7 @@ DESCIPTION = "S3 cold boot"
 MAINTAINER = "vuplus team"
 LICENSE = "CLOSED"
 
-SRCDATE="20130726_p0"
+SRCDATE="20140925_p0"
 
 PV = "1.0"
 PR = "${SRCDATE}_r0"
@@ -18,7 +18,7 @@ do_install() {
 	install -m 0755 ${WORKDIR}/${PN}/coldboot.sh ${D}/etc/init.d/coldboot.sh
 	install -m 0755 ${WORKDIR}/${PN}/ethwol.sh ${D}/etc/init.d/ethwol.sh
 	install -m 0755 ${WORKDIR}/${PN}/coldboot ${D}/usr/bin/coldboot
-        ln -sf   ../init.d/coldboot.sh ${D}${sysconfdir}/rc0.d/S30coldboot.sh
+        ln -sf   ../init.d/coldboot.sh ${D}${sysconfdir}/rc0.d/S50coldboot.sh
 	ln -sf   ../init.d/ethwol.sh ${D}${sysconfdir}/rc0.d/K32ethwol.sh
 }
 
