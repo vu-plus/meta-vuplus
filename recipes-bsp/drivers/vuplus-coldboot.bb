@@ -22,5 +22,5 @@ do_install() {
 	ln -sf   ../init.d/ethwol.sh ${D}${sysconfdir}/rc0.d/K32ethwol.sh
 }
 
-SRC_URI[md5sum] = "16b1a001d5aad67aa786cc580103e053"
-SRC_URI[sha256sum] = "d475c7d266dcf3aa62b740485683fe98d18f19cca3ba844b8d96341c1ced71d0"
+SRC_URI[md5sum] = "5473742bec9c267128c453af8d924821"
+SRC_URI[sha256sum] = "f6dd256f57a4a417169548dc041acc1bb18c73b193fe8b72503f17c3f436923c"
