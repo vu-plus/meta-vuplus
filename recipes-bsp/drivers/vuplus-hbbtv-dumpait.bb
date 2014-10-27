@@ -15,6 +15,7 @@ SRCREV = "74fd7808407bee7bd3f5518f123b900de29fd792"
 PV = "git${SRCPV}"
 PR = "r1"
 PKGV = "git${GITPKGV}"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 RREPLACES_${PN} = "vuplus-opera-dumpait"
 RCONFLICTS_${PN} = "vuplus-opera-dumpait"
