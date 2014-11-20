@@ -18,7 +18,6 @@ EXTRA_IMAGEDEPENDS += "\
 	enigma2-plugin-systemplugins-remotecontrolcode \
 	enigma2-plugin-systemplugins-manualfancontrol \
 	enigma2-plugin-extensions-addstreamurl \
-	enigma2-plugin-systemplugins-transcoding-setup \
 	vuplus-hbbtv-dumpait \
 "
 
