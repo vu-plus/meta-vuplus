@@ -16,7 +16,6 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 EXTRA_IMAGEDEPENDS += "\
 	enigma2-plugin-systemplugins-firmwareupgrade \
 	enigma2-plugin-systemplugins-remotecontrolcode \
-	enigma2-plugin-systemplugins-manualfancontrol \
 	enigma2-plugin-extensions-addstreamurl \
 	vuplus-hbbtv-dumpait \
 "
