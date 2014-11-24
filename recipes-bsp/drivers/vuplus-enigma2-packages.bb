@@ -7,20 +7,15 @@ DEPENDS = "python-native"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-SRCREV = "0c5ce99c4f07836ab35fb0675a63c8cd4341a72c"
+SRCREV = "b0fb2521cedeac8089de73c3b59fd15bda0e99e0"
 inherit gitpkgv
  
 PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"
-PR = "r5"
+PR = "r6"
 BRANCH = "vuplus_experimental"
 
 SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
-	file://vuplus_enigma2_packages.patch;striplevel=1 \
-	file://enigma2-plugin-systemplugins-firmwareupgrade_20130723.patch;striplevel=1;apply=yes \
-	file://enigma2-plugin-systemplugins-firmwareupgrade_add_solose_20140731.patch;striplevel=1;apply=yes \
-	file://enigma2-plugin-systemplugins-manualfancontrol_20130723.patch;striplevel=1;apply=yes \
-	file://enigma2-plugin-systemplugins-remotecontrolcode_20130723.patch;striplevel=1;apply=yes \
 "
 
 S = "${WORKDIR}/git"
