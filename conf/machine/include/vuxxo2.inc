@@ -60,8 +60,6 @@ IMAGE_CMD_ubi_append = " \
 	rm -rf vuplus; \
 "
 
-TARGET_FPU = "hard"
-
 MACHINE_FEATURES += "alsa usbhost wlan kernelwifi externalwifi 3dtv switchoff osdposition hdmicec fan"
 
 require conf/machine/include/tune-mips32.inc
