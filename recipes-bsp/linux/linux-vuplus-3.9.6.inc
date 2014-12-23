@@ -51,7 +51,7 @@ kernel_do_compile() {
 
 pkg_postinst_kernel-image () {
 	if [ -d /proc/stb ] ; then
-		flash_erase /dev/mtd1 0 0
+		flash_eraseall /dev/mtd1
 		nandwrite -p /dev/mtd1 /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz
 	fi
 	rm -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz
