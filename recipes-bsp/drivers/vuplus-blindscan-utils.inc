@@ -9,13 +9,13 @@ PROVIDES += "virtual/blindscan-dvbs virtual/blindscan-dvbc"
 RPROVIDES_vuplus-blindscan-dvbs-utils-${MACHINE} += "virtual/blindscan-dvbs"
 RPROVIDES_vuplus-blindscan-dvbc-utils-${MACHINE} += "virtual/blindscan-dvbc"
 
-PV = "3.6"
+PV = "3.7"
 PR = "r3"
 
 SRC_URI = "http://archive.vuplus.com/download/utils/vuplus-blindscan-utils-${PV}.tar.bz2"
 
-SRC_URI[md5sum] = "b10ee7d7896611fa2c710ba002bcf678"
-SRC_URI[sha256sum] = "7ee73c4ed84a8e11ae2e34d7e5ce8ef55f4a9f41f692e6b614317c27868d6991"
+SRC_URI[md5sum] = "94873fcb634bf4f9519c39bceb4b5a6f"
+SRC_URI[sha256sum] = "70c4dc7afba1f70bc7be51ad7a0785b99d12cf874b43a653deddcf86ef736c71"
 
 S = "${WORKDIR}/blindscan-utils"
 
