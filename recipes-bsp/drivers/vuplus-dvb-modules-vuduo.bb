@@ -2,6 +2,6 @@ require vuplus-dvb-modules.inc
 
 DOWNLOADMACHINE = "bm750"
 
-SRCDATE = "20141229"
-SRC_URI[md5sum] = "325ebd6327bcb307125aabbd0ced4723"
-SRC_URI[sha256sum] = "1b433e4b4f8fb5a2ee9140e06278572e7da91d2c6e5a1599342b2d39cef62bdc"
+SRCDATE = "20141231"
+SRC_URI[md5sum] = "7e0a25c78b9b4e20fa887277cc24deec"
+SRC_URI[sha256sum] = "8c67115e8601ed543d510d31ebd778ed4e3f9ca1fa089e77ee33a5244d1893cf"
