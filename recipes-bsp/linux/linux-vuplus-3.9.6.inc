@@ -2,7 +2,7 @@ DESCRIPTION = "Linux kernel for ${MACHINE}"
 LICENSE = "GPL"
 SECTION = "kernel"
 KV = "3.9.6"
-PR_INC = ".0"
+PR_INC = ".1"
 
 SRC_URI[md5sum] = "33142378c8387a87190156be1cb1a254"
 SRC_URI[sha256sum] = "47799db9e2658906e532981ec8111a915426b8453762561029733f2406c3e297"
@@ -18,9 +18,9 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-${KV}.tar.bz2 \
 	file://${MACHINE}_defconfig \
 	"
 
-S = "${WORKDIR}/linux"
-
 inherit kernel machine_kernel_pr
+
+S = "${WORKDIR}/linux"
 
 export OS = "Linux"
 KERNEL_IMAGETYPE = "vmlinux"
@@ -31,8 +31,7 @@ KERNEL_IMAGEDEST = "/tmp"
 FILES_kernel-image = "${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz"
 
 do_configure_prepend() {
-	oe_machinstall -m 0644 ${WORKDIR}/${MACHINE}_defconfig ${S}/.config
-	oe_runmake oldconfig
+	oe_machinstall -m 0644 ${WORKDIR}/${MACHINE}_defconfig ${WORKDIR}/defconfig
 }
 
 kernel_do_install_append() {
