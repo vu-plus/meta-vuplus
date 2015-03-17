@@ -3,13 +3,14 @@ MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS = " \
 	vuplus-dvb-modules-${MACHINE} \
-	"
+	gst-ffmpeg \
+"
 
 KERNEL_MODULE_AUTOLOAD += "xfs"
 
 MACHINE_EXTRA_RRECOMMENDS = " \
 	vuplus-shutdown \
-	gst-plugin-vuplus-dvbmediasink \
+	gst-plugin-dvbmediasink \
 	ntfs-3g \
 "
 
@@ -23,7 +24,7 @@ EXTRA_IMAGEDEPENDS += "\
 TARGET_ARCH = "mipsel"
 DEFAULTTUNE = "mips32el"
 
-DVBMEDIASINK_CONFIG = "--with-pcm"
+DVBMEDIASINK_CONFIG = "--with-wmv --with-pcm --with-eac3"
 
 PREFERRED_VERSION_linux-${MACHINE} = "3.13.5"
 
