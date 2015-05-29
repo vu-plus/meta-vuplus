@@ -9,13 +9,13 @@ PROVIDES += "virtual/blindscan-dvbs virtual/blindscan-dvbc"
 RPROVIDES_vuplus-blindscan-dvbs-utils-${MACHINE} += "virtual/blindscan-dvbs"
 RPROVIDES_vuplus-blindscan-dvbc-utils-${MACHINE} += "virtual/blindscan-dvbc"
 
-PV = "3.7"
-PR = "r3"
+PV = "3.8"
+PR = "r4"
 
 SRC_URI = "http://archive.vuplus.com/download/utils/vuplus-blindscan-utils-${PV}.tar.bz2"
 
-SRC_URI[md5sum] = "94873fcb634bf4f9519c39bceb4b5a6f"
-SRC_URI[sha256sum] = "70c4dc7afba1f70bc7be51ad7a0785b99d12cf874b43a653deddcf86ef736c71"
+SRC_URI[md5sum] = "0efbbfd6816d00bd808d2897995a87a6"
+SRC_URI[sha256sum] = "486a22c76e051e98dcc54129ca62ad05d41c2fb78a5cdf9324ca161fece00cd7"
 
 S = "${WORKDIR}/blindscan-utils"
 
@@ -28,14 +28,6 @@ PLUGABLE_MODEL_BLINDSCAN = " \
         ssh108_t2_scan \
         tt3l10 \
         tt3l10_t2_scan \
-"
-
-PLUGABLE_SOLOSE_BLINDSCAN = " \
-        tda1002x \
-        vuplus_blindscan \
-        vuplus_6211_blindscan \
-        ssh108 \
-        ssh108_t2_scan \
 "
 
 do_install() {
@@ -66,7 +58,7 @@ do_install_vuduo2() {
 
 do_install_vusolose() {
         install -d "${D}/${bindir}"
-        for f in ${PLUGABLE_SOLOSE_BLINDSCAN}; do
+        for f in ${PLUGABLE_MODEL_BLINDSCAN}; do
                 install -m 0755 "${S}/$f" "${D}/${bindir}"
         done
 }
