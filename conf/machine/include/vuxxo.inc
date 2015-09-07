@@ -16,6 +16,7 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 
 EXTRA_IMAGEDEPENDS += "\
     vuplus-hbbtv-dumpait \
+    vuplus-tuner-turbo \
 "
 
 TARGET_ARCH = "mipsel"

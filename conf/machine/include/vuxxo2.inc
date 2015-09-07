@@ -19,6 +19,7 @@ EXTRA_IMAGEDEPENDS += "\
 	enigma2-plugin-systemplugins-remotecontrolcode \
 	enigma2-plugin-extensions-addstreamurl \
 	vuplus-hbbtv-dumpait \
+	vuplus-tuner-turbo \
 "
 
 TARGET_ARCH = "mipsel"
