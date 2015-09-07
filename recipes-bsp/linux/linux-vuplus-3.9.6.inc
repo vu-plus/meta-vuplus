@@ -2,7 +2,7 @@ DESCRIPTION = "Linux kernel for ${MACHINE}"
 LICENSE = "GPL"
 SECTION = "kernel"
 KV = "3.9.6"
-PR_INC = ".1"
+PR_INC = ".2"
 
 SRC_URI[md5sum] = "33142378c8387a87190156be1cb1a254"
 SRC_URI[sha256sum] = "47799db9e2658906e532981ec8111a915426b8453762561029733f2406c3e297"
@@ -15,6 +15,7 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-${KV}.tar.bz2 \
 	file://nfs-max-rwsize-8k.patch \
 	file://fix_fuse_for_linux_mips_3-9.patch \
 	file://rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
+	file://linux-3.9-gcc-4.9.3-build-error-fixed.patch \
 	file://${MACHINE}_defconfig \
 	"
 
