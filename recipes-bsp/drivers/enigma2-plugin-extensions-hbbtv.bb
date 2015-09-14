@@ -10,7 +10,7 @@ SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH} \
 "
 
 inherit gitpkgv
-SRCREV = "077f3128edfbc3225faaa0596b3a3a4a27435d51"
+SRCREV = "9e71a84b987082e466bc6c9c3b58255748bfe338"
 PV = "git${SRCPV}"
 PKGV = "git${GITPKGV}"
 

@@ -11,9 +11,9 @@ S = "${WORKDIR}/git"
 DESTDIR = "enigma2/python/Plugins/Extensions/HbbTV"
 
 inherit gitpkgv
-SRCREV = "74fd7808407bee7bd3f5518f123b900de29fd792"
+SRCREV = "1adfdd7dadb760a8ff2107dce60e2f99ca74fa5d"
 PV = "git${SRCPV}"
-PR = "r1"
+PR = "r2"
 PKGV = "git${GITPKGV}"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
