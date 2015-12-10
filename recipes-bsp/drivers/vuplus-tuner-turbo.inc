@@ -15,6 +15,13 @@ SRC_URI = " \
 DEPENDS += "virtual/kernel module-init-tools"
 RDEPENDS_${PN} += "module-init-tools-depmod"
 
+RRECOMMENDS_${PN} = " \
+    kernel-module-dvb-usb \
+    kernel-module-dvb-usb-v2 \
+    kernel-module-cypress-firmware \
+    kernel-module-dvb-usb-cypress-firmware \
+    "
+
 SRCDATE_arm = "20151104"
 FW_SRCDATE_arm = "20151104"
 SRC_URI_arm = " \
