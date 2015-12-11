@@ -16,6 +16,8 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-${KV}.tar.bz2 \
 	file://rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
 	file://linux-tcp_output.patch \
 	file://linux-3.13-gcc-4.9.3-build-error-fixed.patch \
+	file://kernel-add-support-for-gcc-5.patch \
+	file://rtl8712-fix-warnings.patch \
 	file://${MACHINE}_defconfig \
 	"
 
