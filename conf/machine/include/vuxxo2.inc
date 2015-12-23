@@ -3,7 +3,6 @@ MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
 MACHINE_ESSENTIAL_EXTRA_RDEPENDS = " \
 	vuplus-dvb-modules-${MACHINE} \
-	gst-ffmpeg \
 "
 
 KERNEL_MODULE_AUTOLOAD += "xfs"
