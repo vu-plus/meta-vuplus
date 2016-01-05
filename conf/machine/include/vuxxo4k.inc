@@ -23,7 +23,7 @@ EXTRA_IMAGEDEPENDS += "\
 TARGET_ARCH = "arm"
 DEFAULTTUNE = "armv7ahf-neon"
 
-DVBMEDIASINK_CONFIG = "--with-wmv --with-pcm --with-eac3"
+DVBMEDIASINK_CONFIG = "--with-wmv --with-pcm --with-eac3 --with-h265"
 
 PREFERRED_VERSION_linux-${MACHINE} = "3.14.28"
 
