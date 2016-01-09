@@ -12,7 +12,6 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 	vuplus-shutdown \
 	gst-plugin-dvbmediasink \
 	ntfs-3g \
-	${@base_contains("MACHINE_FEATURES", "minitv", "enigma2-plugin-extensions-minitv", "", d)} \
 "
 
 EXTRA_IMAGEDEPENDS += "\
