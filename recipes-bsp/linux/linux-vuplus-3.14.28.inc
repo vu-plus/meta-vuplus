@@ -2,7 +2,7 @@ DESCRIPTION = "Linux kernel for ${MACHINE}"
 LICENSE = "GPLv2"
 SECTION = "kernel"
 KV = "3.14.28"
-PR_INC = ".0"
+PR_INC = ".1"
 
 SRC_URI[md5sum] = "1a62540fdd7f23aa2c1ebf119ca71e91"
 SRC_URI[sha256sum] = "a464515d14dda772047ddba7900858f535057294903341e2c1774009eaf95005"
@@ -19,6 +19,9 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-3.14-1.8.tar.bz2 
 	file://rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
 	file://usb_core_hub_msleep.patch \
 	file://rtl8712_fix_build_error.patch \
+	file://0001-Support-TBS-USB-drivers.patch \
+	file://0001-STV-Add-PLS-support.patch \
+	file://0001-STV-Add-SNR-Signal-report-parameters.patch \
 	${@base_contains("MACHINE_FEATURES", "dvbproxy", "file://linux_dvb_adapter.patch", "", d)} \
 	file://${MACHINE}_defconfig \
 	"
