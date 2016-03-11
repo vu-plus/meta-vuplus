@@ -2,7 +2,7 @@ DESCRIPTION = "Linux kernel for ${MACHINE}"
 LICENSE = "GPL"
 SECTION = "kernel"
 KV = "3.9.6"
-PR_INC = ".3"
+PR_INC = ".4"
 
 SRC_URI[md5sum] = "33142378c8387a87190156be1cb1a254"
 SRC_URI[sha256sum] = "47799db9e2658906e532981ec8111a915426b8453762561029733f2406c3e297"
@@ -19,6 +19,9 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-${KV}.tar.bz2 \
 	file://kernel-add-support-for-gcc-5.patch \
 	file://rtl8712-fix-warnings.patch \
 	file://rtl8187se-fix-warnings.patch \
+	file://0001-Support-TBS-USB-drivers-3.9.patch \
+	file://0001-STV-Add-PLS-support.patch \
+	file://0001-STV-Add-SNR-Signal-report-parameters.patch \
 	file://${MACHINE}_defconfig \
 	"
 
