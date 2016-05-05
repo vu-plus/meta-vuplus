@@ -12,6 +12,7 @@ S = "${WORKDIR}"
 
 #inherit module-base
 DEPENDS = "virtual/kernel"
+do_configure[depends] += "virtual/kernel:do_shared_workdir"
 KERNEL_VERSION = "${@base_read_file('${STAGING_KERNEL_BUILDDIR}/kernel-abiversion')}"
 
 do_install() {
