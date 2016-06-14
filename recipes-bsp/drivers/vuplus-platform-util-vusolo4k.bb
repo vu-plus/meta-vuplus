@@ -2,7 +2,7 @@ require vuplus-platform-util.inc
 
 PV="15.2"
 SRCDATE = "20160602"
-SRCDATE_PR = "r0"
+SRCDATE_PR = "r1"
 
 
 SRC_URI[md5sum] = "b9be545c5945cffefcc456c73d90e827"
