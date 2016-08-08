@@ -22,6 +22,7 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-${KV}.tar.bz2 \
 	file://0001-STV-Add-PLS-support.patch \
 	file://0001-STV-Add-SNR-Signal-report-parameters.patch \
 	file://0001-stv090x-optimized-TS-sync-control.patch \
+	file://kernel-gcc6.patch \
 	file://${MACHINE}_defconfig \
 	"
 

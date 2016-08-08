@@ -24,6 +24,7 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-3.14-1.8.tar.bz2 
 	file://0001-STV-Add-SNR-Signal-report-parameters.patch \
 	file://0001-stv090x-optimized-TS-sync-control.patch \
 	${@base_contains("MACHINE_FEATURES", "dvbproxy", "file://linux_dvb_adapter.patch", "", d)} \
+	file://kernel-gcc6.patch \
 	file://${MACHINE}_defconfig \
 	"
 
