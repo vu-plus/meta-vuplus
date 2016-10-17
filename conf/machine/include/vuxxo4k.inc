@@ -17,6 +17,7 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 EXTRA_IMAGEDEPENDS += "\
 	enigma2-plugin-systemplugins-remotecontrolcode \
 	enigma2-plugin-extensions-addstreamurl \
+	vuplus-tuner-turbo \
 "
 
 TARGET_ARCH = "arm"
