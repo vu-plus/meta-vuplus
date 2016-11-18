@@ -4,17 +4,18 @@ LICENSE = "CLOSED"
 SECTION = "base"
 
 DEPENDS = "mpfr gmp"
+DEPENDS += "${@base_contains("GST_VERSION", "1.0", "gstreamer1.0", "gstreamer", d)}"
 RREPLACES_${PN} = "vuplus-opera-browser-util"
 RCONFLICTS_${PN} = "vuplus-opera-browser-util"
 PACKAGES = "${PN}"
 
-SRC_DATE = "20150622_0"
+SRC_DATE = "20151222_0"
 PR = "r2_${SRC_DATE}"
 
 SRC_URI = ""
 SRC_FILE = "opera-hbbtv_${SRC_DATE}.tar.gz"
-SRC_URI[md5sum] = "3dbefb3fce773077fd3604c4666f0c3e"
-SRC_URI[sha256sum] = "909dd2f98d322b46a97d298e0dc0ab54a47538a791be3bf40ef9314df0f0aa44"
+SRC_URI[md5sum] = "bc52fd1fe1ace5bf64b265f27525f25d"
+SRC_URI[sha256sum] = "4f8051b136d15a91b22cd618b1d3d0f131600229ff3c129c0b0a766bc1dc49f9"
 
 S = "${WORKDIR}/opera-hbbtv"
 
