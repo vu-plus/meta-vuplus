@@ -46,7 +46,7 @@ IMAGE_CMD_tar_prepend = " \
         rm -rf ${IMAGE_ROOTFS}/boot/initrd_auto.bin; \
         cd ${IMAGE_ROOTFS}; \
         tar -cvf ${IMGDEPLOYDIR}/rootfs.tar -C ${IMAGE_ROOTFS} .; \
-        mv -f f${IMGDEPLOYDIR}/rootfs.tar ${IMGDEPLOYDIR}/vuplus/${UPDATE_DIR}/rootfs.tar; \
+        mv -f ${IMGDEPLOYDIR}/rootfs.tar ${IMGDEPLOYDIR}/vuplus/${UPDATE_DIR}/rootfs.tar; \
         bzip2 ${IMGDEPLOYDIR}/vuplus/${UPDATE_DIR}/rootfs.tar; \
         cd ${IMGDEPLOYDIR}; \
         zip ${IMAGE_NAME}_usb.zip vuplus/${UPDATE_DIR}/*; \
