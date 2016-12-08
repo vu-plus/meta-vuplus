@@ -9,7 +9,7 @@ PROVIDES += "virtual/blindscan-dvbs virtual/blindscan-dvbc"
 RPROVIDES_vuplus-blindscan-dvbs-utils-${MACHINE} += "virtual/blindscan-dvbs"
 RPROVIDES_vuplus-blindscan-dvbc-utils-${MACHINE} += "virtual/blindscan-dvbc"
 
-PV = "3.8"
+PV = "4.2"
 PR = "r4"
 
 SRC_URI = "http://archive.vuplus.com/download/utils/vuplus-blindscan-utils-${PV}.tar.bz2"
@@ -28,6 +28,8 @@ PLUGABLE_MODEL_BLINDSCAN = " \
         ssh108_t2_scan \
         tt3l10 \
         tt3l10_t2_scan \
+	tt2l08 \
+	tt2l08_t2_scan \
 "
 
 do_install() {
@@ -82,6 +84,8 @@ FILES_vuplus-blindscan-dvbc-utils-${MACHINE} = "\
 	${bindir}/ssh108_t2_scan \
 	${bindir}/tt3l10 \
 	${bindir}/tt3l10_t2_scan \
+	${bindir}/tt2l08 \
+	${bindir}/tt2l08_t2_scan \
 	"
 
 INHIBIT_PACKAGE_STRIP = "1"
