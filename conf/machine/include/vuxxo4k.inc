@@ -18,6 +18,8 @@ EXTRA_IMAGEDEPENDS += "\
 	enigma2-plugin-systemplugins-remotecontrolcode \
 	enigma2-plugin-extensions-addstreamurl \
 	vuplus-tuner-turbo \
+	${@base_contains("MACHINE_FEATURES", "bluetooth", "enigma2-plugin-systemplugins-bluetoothsetup", "", d)} \
+	${@base_contains("MACHINE_FEATURES", "bcmwifi", "vuplus-wifi-util-${MACHINE}", "", d)} \
 "
 
 TARGET_ARCH = "arm"

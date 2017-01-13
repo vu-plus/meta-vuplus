@@ -19,7 +19,7 @@ case "$1" in
 
         mknod -m a=rw /dev/brcm0 c 30 0
 
-        start-stop-daemon --start --quiet --exec /usr/bin/init_client $DRV_PATH/dvb-bcm.ko $DRV_PATH/brcmfb.ko -- &
+        start-stop-daemon --start --quiet --exec /usr/bin/init_client $DRV_PATH/dvb-bcm.ko $DRV_PATH/brcmfb.ko $DRV_PATH/wakeup_drv.ko -- &
     fi
 
     while [ ! -c /dev/fb0 ]; do
