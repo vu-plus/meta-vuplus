@@ -2,9 +2,9 @@ require vuplus-initrd.inc
 
 do_install() {
     install -d ${D}/boot
-    install -m 0755 ${WORKDIR}/vmlinuz-initrd-7366b0 ${D}/boot/initrd_auto.bin
+    install -m 0755 ${WORKDIR}/vmlinuz-initrd-7366c0 ${D}/boot/initrd_auto.bin
 }
 
-SRCDATE = "20150901"
-SRC_URI[md5sum] = "825b9e90b49742358ec162db13e75d9d"
-SRC_URI[sha256sum] = "d5fa2dd43cca9070e0be857ddbc57ed82b918a23c5daa9b4243aeee4c33e3911"
+SRCDATE = "20170112"
+SRC_URI[md5sum] = "b3e6a9df20211076adbe2f33b8bbad87"
+SRC_URI[sha256sum] = "c471b241f7d14ae401bfdd940307739d38b94213286a450078321def04f717a0"
