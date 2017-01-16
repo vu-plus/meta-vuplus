@@ -5,7 +5,7 @@ LICENSE = "CLOSED"
 DEPENDS = "python-native"
 RDEPENDS_${PN} = "vuplus-bluetooth-util"
 
-SRCDATE="20161128"
+SRCDATE="20170116"
 SRCDATE_PR = "r0"
 PR="${SRCDATE}.${SRCDATE_PR}"
 
