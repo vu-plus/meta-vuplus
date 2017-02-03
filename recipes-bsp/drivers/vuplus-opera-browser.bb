@@ -4,7 +4,7 @@ LICENSE = "CLOSED"
 SECTION = "base"
 
 DEPENDS = "mpfr gmp"
-DEPENDS += "${@base_contains("GST_VERSION", "1.0", "gstreamer1.0", "gstreamer", d)}"
+DEPENDS += "${@bb.utils.contains("GST_VERSION", "1.0", "gstreamer1.0", "gstreamer", d)}"
 RREPLACES_${PN} = "vuplus-opera-browser-util"
 RCONFLICTS_${PN} = "vuplus-opera-browser-util"
 PACKAGES = "${PN}"
