@@ -2,7 +2,7 @@ DESCRIPTION = "Linux kernel for ${MACHINE}"
 LICENSE = "GPLv2"
 SECTION = "kernel"
 KV = "3.14.28"
-PR_INC = ".2"
+PR_INC = ".3"
 
 SRC_URI[md5sum] = "1a62540fdd7f23aa2c1ebf119ca71e91"
 SRC_URI[sha256sum] = "a464515d14dda772047ddba7900858f535057294903341e2c1774009eaf95005"
