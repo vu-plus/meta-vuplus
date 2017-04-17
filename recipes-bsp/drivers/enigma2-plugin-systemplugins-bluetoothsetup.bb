@@ -23,7 +23,7 @@ do_compile() {
 
 do_install() {
 	install -d  ${D}${BLUETOOTH_PLUGIN_PATH}
-	cp -rp ${S}/* ${D}${BLUETOOTH_PLUGIN_PATH}
+	cp -r --preserve=mode,links ${S}/* ${D}${BLUETOOTH_PLUGIN_PATH}
 }
 
 FILES_${PN} = "${BLUETOOTH_PLUGIN_PATH}"
