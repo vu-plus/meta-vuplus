@@ -5,7 +5,7 @@ LICENSE = "CLOSED"
 DEPENDS = "python-native"
 RDEPENDS_${PN} = "vuplus-bluetooth-util"
 
-SRCDATE="20170116"
+SRCDATE="20170327"
 SRCDATE_PR = "r0"
 PR="${SRCDATE}.${SRCDATE_PR}"
 
@@ -34,5 +34,5 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 INSANE_SKIP_${PN} = "already-stripped"
 
-SRC_URI[md5sum] = "f5f757352253ad03ee8baff4913e2c5d"
-SRC_URI[sha256sum] = "f7768b497e4915423cacb24bd2fe4937a8e287c3694954d2eb049eff4ac399e8"
+SRC_URI[md5sum] = "a1d19dd1a8b739b4073f4da07b6c1ccc"
+SRC_URI[sha256sum] = "94ec17b623fc8178b8d6083e516d12b047d698107c19eda39c9b0250a637df46"
