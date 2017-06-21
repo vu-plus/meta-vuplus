@@ -3,9 +3,9 @@ DESCRIPTION = "Vuplus bluetooth plugin"
 LICENSE = "CLOSED"
 
 DEPENDS = "python-native"
-RDEPENDS_${PN} = "vuplus-bluetooth-util"
+RDEPENDS_${PN} = "vuplus-bluetooth-util libusb-compat"
 
-SRCDATE="20170327"
+SRCDATE="20170609"
 SRCDATE_PR = "r0"
 PR="${SRCDATE}.${SRCDATE_PR}"
 
@@ -34,5 +34,5 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 INSANE_SKIP_${PN} = "already-stripped"
 
-SRC_URI[md5sum] = "a1d19dd1a8b739b4073f4da07b6c1ccc"
-SRC_URI[sha256sum] = "94ec17b623fc8178b8d6083e516d12b047d698107c19eda39c9b0250a637df46"
+SRC_URI[md5sum] = "6a541306e8f36f2d0130e537957a895c"
+SRC_URI[sha256sum] = "fbe18e744c27084f03523b7c33f2f44f2f5906f6f19be444a176ac99f7784050"
