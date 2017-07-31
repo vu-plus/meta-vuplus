@@ -20,6 +20,7 @@ EXTRA_IMAGEDEPENDS += "\
 	vuplus-tuner-turbo \
 	${@bb.utils.contains("MACHINE_FEATURES", "bluetooth", "enigma2-plugin-systemplugins-bluetoothsetup", "", d)} \
 	${@bb.utils.contains("MACHINE_FEATURES", "bcmwifi", "vuplus-wifi-util-${MACHINE}", "", d)} \
+	kernel-module-sr-mod \
 "
 
 TARGET_ARCH = "arm"

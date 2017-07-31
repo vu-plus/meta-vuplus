@@ -20,6 +20,7 @@ EXTRA_IMAGEDEPENDS += "\
 	enigma2-plugin-extensions-addstreamurl \
 	vuplus-hbbtv-dumpait \
 	vuplus-tuner-turbo \
+	kernel-module-sr-mod \
 "
 
 TARGET_ARCH = "mipsel"
