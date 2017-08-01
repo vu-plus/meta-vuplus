@@ -14,13 +14,16 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 	ntfs-3g \
 "
 
+MACHINE_EXTRA_RDEPENDS += "\
+	kernel-module-sr-mod \
+"
+
 EXTRA_IMAGEDEPENDS += "\
 	enigma2-plugin-systemplugins-firmwareupgrade \
 	enigma2-plugin-systemplugins-remotecontrolcode \
 	enigma2-plugin-extensions-addstreamurl \
 	vuplus-hbbtv-dumpait \
 	vuplus-tuner-turbo \
-	kernel-module-sr-mod \
 "
 
 TARGET_ARCH = "mipsel"
