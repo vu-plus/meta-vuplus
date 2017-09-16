@@ -1,6 +1,9 @@
 SECTION = "base"
 LICENSE = "CLOSED"
 
+PROVIDES = "virtual/libgles2 virtual/egl"
+COMPATIBLE_MACHINE = "vu"
+
 PV="15.1"
 PR="${SRCDATE}.${SRCDATE_PR}"
 
@@ -21,7 +24,9 @@ do_install() {
 do_package_qa[noexec] = "1"
 
 PACKAGE_ARCH := "${MACHINE_ARCH}"
-PACKAGES = "${PN}"
-FILES_${PN}="/usr/lib /usr/include"
+FILES_SOLIBSDEV = ""
+FILES_${PN}="${libdir}"
+
+RPROVIDES_${PN} = "libEGL.so libGLESv2.so libdvb_base.so libdvb_client.so libnxpl.so libv3ddriver.so"
 
 INSANE_SKIP_${PN} = "already-stripped"
