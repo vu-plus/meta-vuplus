@@ -38,6 +38,9 @@ PREFERRED_PROVIDER_virtual/kernel = "linux-${MACHINE}"
 PREFERRED_PROVIDER_virtual/blindscan-dvbc = "vuplus-blindscan-utils-${MACHINE}"
 PREFERRED_PROVIDER_virtual/blindscan-dvbs = "vuplus-blindscan-utils-${MACHINE}"
 
+PREFERRED_PROVIDER_virtual/egl = "libgles-${MACHINE}"
+PREFERRED_PROVIDER_virtual/libgles2 = "libgles-${MACHINE}"
+
 IMAGE_FSTYPES ?= "ubi"
 
 UBI_VOLNAME = "rootfs"
