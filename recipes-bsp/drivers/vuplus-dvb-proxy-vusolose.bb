@@ -2,7 +2,7 @@ require vuplus-dvb-proxy.inc
 
 COMPATIBLE_MACHINE = "^(vusolose)$"
 
-SRCDATE = "20171204"
+SRCDATE = "20180220"
 SRCDATE_PR = "r0"
 
 pkg_postinst_${PN}_append () {
@@ -11,5 +11,5 @@ pkg_postinst_${PN}_append () {
 	fi
 }
 
-SRC_URI[md5sum] = "29677f9c975bf7fb2c59160d4fb3ee13"
-SRC_URI[sha256sum] = "11494831cc548cff80ad4523a4bba25688f30b6735ce9b5897f1bb935252f76c"
+SRC_URI[md5sum] = "9045d1a6e64fe364d3d58d3d9de64bfb"
+SRC_URI[sha256sum] = "0abae28fa092b64fc36c430ca5bde33f827930831427aec5f6f17cf79521b7f7"
