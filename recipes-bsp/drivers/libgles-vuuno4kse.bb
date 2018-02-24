@@ -2,7 +2,7 @@ require libgles.inc
 
 SRCDATE = "20180220"
 SRCDATE_PR = "r0"
-PV="16.1"
+PV="17.1"
 
 
 SRC_URI[md5sum] = "425f578af7d3068a2ab488b7b1548f9d"
