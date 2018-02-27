@@ -9,13 +9,13 @@ RREPLACES_${PN} = "vuplus-opera-browser-util"
 RCONFLICTS_${PN} = "vuplus-opera-browser-util"
 PACKAGES = "${PN}"
 
-SRC_DATE = "20151222_0"
+SRC_DATE = "20171018_0"
 PR = "r2_${SRC_DATE}"
 
 SRC_URI = ""
 SRC_FILE = "opera-hbbtv_${SRC_DATE}.tar.gz"
-SRC_URI[md5sum] = "bc52fd1fe1ace5bf64b265f27525f25d"
-SRC_URI[sha256sum] = "4f8051b136d15a91b22cd618b1d3d0f131600229ff3c129c0b0a766bc1dc49f9"
+SRC_URI[md5sum] = "b7c80c0004cce528be1221ccabb93010"
+SRC_URI[sha256sum] = "15e00cf8cd8d82255426acdd03b3d677342c088e946e18e491119b4c5175e6f5"
 
 S = "${WORKDIR}/opera-hbbtv"
 
@@ -45,11 +45,10 @@ do_install() {
 }
 
 do_install_append() {
-	GST_REQUIRED_VERSION=$(pkg-config --list-all | grep gstreamer-[0-9].* | awk -F "-| " '{print $2}')
-	GST_VERSION=$(pkg-config --modversion "gstreamer-$GST_REQUIRED_VERSION >= $GST_REQUIRED_VERSION")
-	mv ${D}/usr/local/hbb-browser/root/jsplugins/ooif-gst-$GST_VERSION.so ${D}/usr/local/hbb-browser/root/jsplugins/ooif.so
+	GST_PREFERED_VERSION="${@bb.utils.contains("GST_VERSION", "1.0", "1.4.5", "0.10.36.1", d)}"
+	mv ${D}/usr/local/hbb-browser/root/jsplugins/ooif-gst-$GST_PREFERED_VERSION.so ${D}/usr/local/hbb-browser/root/jsplugins/ooif.so
 	rm -f ${D}/usr/local/hbb-browser/root/jsplugins/ooif-gst*.so
-	mv ${D}/usr/local/hbb-browser/root/video/videobackend-gst-$GST_VERSION.so ${D}/usr/local/hbb-browser/root/video/videobackend.so
+	mv ${D}/usr/local/hbb-browser/root/video/videobackend-gst-$GST_PREFERED_VERSION.so ${D}/usr/local/hbb-browser/root/video/videobackend.so
 	rm -f ${D}/usr/local/hbb-browser/root/video/videobackend-gst*.so
 }
 
