@@ -1,9 +1,9 @@
-SRCDATE = "20170324.r0"
+SRCDATE = "20180213.r1"
 
 require webkit-hbbtv-browser.inc
 
 COMPATIBLE_MACHINE = "^(vuuno4k)$"
 
 
-SRC_URI[md5sum] = "6f6e621aae41cfe6c7a1ac07524415a1"
-SRC_URI[sha256sum] = "b7e408dc8996f75b69d32cd8b0f626031764986e1869415e845ab008928ef2a8"
+SRC_URI[md5sum] = "55d7b950049a5663922721113d2a5509"
+SRC_URI[sha256sum] = "3ee8e767b871155d4ec611a77babdb940da27b37c0de5f8ea6b43c7ebf006e9a"
