@@ -16,6 +16,7 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 
 MACHINE_EXTRA_RDEPENDS += "\
 	kernel-module-sr-mod \
+	${@bb.utils.contains("MACHINE_FEATURES", "opera-browser", "vuplus-opera-browser", "", d)} \
 "
 
 EXTRA_IMAGEDEPENDS += "\
