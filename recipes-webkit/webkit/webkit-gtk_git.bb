@@ -61,6 +61,8 @@ LDFLAGS += "-Wl,--no-keep-memory"
 
 CXXFLAGS += " -std=gnu++98"
 
+OECMAKE_GENERATOR = "Unix Makefiles"
+
 EXTRA_AUTORECONF = " -I Source/autotools "
 
 ARM_INSTRUCTION_SET = "arm"
