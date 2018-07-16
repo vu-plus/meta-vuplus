@@ -1,6 +1,8 @@
 DESCRIPTION = "Linux kernel for ${MACHINE}"
 LICENSE = "GPLv2"
 SECTION = "kernel"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
 KV = "3.9.6"
 PR_INC = ".5"
 
