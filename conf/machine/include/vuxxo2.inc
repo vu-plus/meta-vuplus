@@ -66,7 +66,7 @@ IMAGE_CMD_ubi_append = " \
 	cp -f ${IMGDEPLOYDIR}/${IMAGE_NAME}.initrd_cfe_auto.bin ${IMGDEPLOYDIR}/vuplus/${UPDATE_DIR}/initrd_cfe_auto.bin; \
 	touch ${IMGDEPLOYDIR}/vuplus/${UPDATE_DIR}/${FORCE_REBOOT_OPTION}.update; \
 	cd ${IMGDEPLOYDIR}; \
-	zip ${IMAGE_NAME}_usb.zip vuplus/${UPDATE_DIR}/*; \
+	zip ${DISTRO_NAME}-${DISTRO_VERSION}-${MACHINE}_usb.zip vuplus/${UPDATE_DIR}/*; \
 	rm -rf vuplus; \
 "
 
