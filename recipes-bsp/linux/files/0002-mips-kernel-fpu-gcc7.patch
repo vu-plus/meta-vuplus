@@ -1,0 +1,53 @@
+From: Manuel Lauss <manuel.lauss at gmail.com>
+
+commit 8535f2ba0a9b971df62a5890699b9dfe2e0d5580 upstream
+
+MIPS: math-emu: do not use bools for arithmetic
+
+GCC-7 complains about a boolean value being used with an arithmetic
+AND:
+
+arch/mips/math-emu/cp1emu.c: In function 'cop1Emulate':
+arch/mips/math-emu/cp1emu.c:838:14: warning: '~' on a boolean expression [-Wbool-operation]
+  fpr = (x) & ~(cop1_64bit(xcp) == 0);    \
+                ^
+arch/mips/math-emu/cp1emu.c:1068:3: note: in expansion of macro 'DITOREG'
+  DITOREG(dval, MIPSInst_RT(ir));
+  ^~~~~~~
+arch/mips/math-emu/cp1emu.c:838:14: note: did you mean to use logical not?
+  fpr = (x) & ~(cop1_64bit(xcp) == 0);    \
+
+Since cop1_64bit() returns and int, just flip the LSB.
+
+Updated-by: Erik slagter <erik@openpli.org>
+Suggested-by: Maciej W. Rozycki <macro at imgtec.com>
+Signed-off-by: Manuel Lauss <manuel.lauss at gmail.com>
+Reviewed-by: Maciej W. Rozycki <macro at imgtec.com>
+Cc: linux-mips at linux-mips.org
+Patchwork: https://patchwork.linux-mips.org/patch/17058/
+Signed-off-by: Ralf Baechle <ralf at linux-mips.org>
+Signed-off-by: Hongzhi Song <hongzhi.song at windriver.com>
+---
+arch/mips/math-emu/cp1emu.c | 4 ++--
+1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff -ur a/arch/mips/math-emu/cp1emu.c b/arch/mips/math-emu/cp1emu.c
+--- kernel-source-unpatched/arch/mips/math-emu/cp1emu.c	2014-03-12 09:27:05.000000000 +0100
++++ kernel-source-patched/arch/mips/math-emu/cp1emu.c	2018-10-11 19:56:35.532651188 +0200
+@@ -191,13 +191,13 @@
+ #define SIFROMREG(si, x) ((si) = cop1_64bit(xcp) || !(x & 1) ? \
+ 			(int)ctx->fpr[x] : (int)(ctx->fpr[x & ~1] >> 32))
+ 
+-#define SITOREG(si, x)	(ctx->fpr[x & ~(cop1_64bit(xcp) == 0)] = \
++#define SITOREG(si, x)	(ctx->fpr[x & ~(cop1_64bit(xcp) ^ 1)] = \
+ 			cop1_64bit(xcp) || !(x & 1) ? \
+ 			ctx->fpr[x & ~1] >> 32 << 32 | (u32)(si) : \
+ 			ctx->fpr[x & ~1] << 32 >> 32 | (u64)(si) << 32)
+ 
+-#define DIFROMREG(di, x) ((di) = ctx->fpr[x & ~(cop1_64bit(xcp) == 0)])
+-#define DITOREG(di, x)	(ctx->fpr[x & ~(cop1_64bit(xcp) == 0)] = (di))
++#define DIFROMREG(di, x) ((di) = ctx->fpr[x & ~(cop1_64bit(xcp) ^ 1)])
++#define DITOREG(di, x)	(ctx->fpr[x & ~(cop1_64bit(xcp) ^ 1)] = (di))
+ 
+ #define SPFROMREG(sp, x) SIFROMREG((sp).bits, x)
+ #define SPTOREG(sp, x)	SITOREG((sp).bits, x)
