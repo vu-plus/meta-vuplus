@@ -3,19 +3,20 @@ SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "CLOSED"
 
-PACKAGES = "vuplus-blindscan-dvbs-utils-${MACHINE} vuplus-blindscan-dvbc-utils-${MACHINE}"
+PACKAGES = "vuplus-blindscan-dvbs-utils-${MACHINE} vuplus-blindscan-dvbc-utils-${MACHINE} vuplus-blindscan-dvbt-utils-${MACHINE}"
 
 PROVIDES += "virtual/blindscan-dvbs virtual/blindscan-dvbc"
 RPROVIDES_vuplus-blindscan-dvbs-utils-${MACHINE} += "virtual/blindscan-dvbs"
 RPROVIDES_vuplus-blindscan-dvbc-utils-${MACHINE} += "virtual/blindscan-dvbc"
+RPROVIDES_vuplus-blindscan-dvbt-utils-${MACHINE} += "virtual/blindscan-dvbt"
 
-PV = "5.0"
+PV = "5.1"
 PR = "r0"
 
 SRC_URI = "http://archive.vuplus.com/download/utils/vuplus-blindscan-utils-${PV}_arm.tar.bz2"
 
-SRC_URI[md5sum] = "deb347c9910e2d6c7861b018d6e682c7"
-SRC_URI[sha256sum] = "635e7b5b23c865292b026742f0014ea3fd280d3dfe0b95647b8ae7f72aafe6a4"
+SRC_URI[md5sum] = "1744184485bdc6889f6556504e574c6a"
+SRC_URI[sha256sum] = "518775bf3ff43ade300741232ce4d303d4aeaea09f1a7d7256e40a4fe95156ca"
 
 S = "${WORKDIR}/blindscan-utils"
 
@@ -29,6 +30,8 @@ PLUGABLE_MODEL_BLINDSCAN = " \
 	tt3l10_t2_scan \
 	tt2l08 \
 	tt2l08_t2_scan \
+	bcm3148 \
+	bcm3466 \
 "
 
 do_install() {
@@ -46,12 +49,17 @@ FILES_vuplus-blindscan-dvbs-utils-${MACHINE} = "\
 
 FILES_vuplus-blindscan-dvbc-utils-${MACHINE} = "\
 	${bindir}/ssh108 \
-	${bindir}/ssh108_t2_scan \
 	${bindir}/tt3l10 \
-	${bindir}/tt3l10_t2_scan \
-	tt2l08 \
-	tt2l08_t2_scan \
+	${bindir}/tt2l08 \
+	${bindir}/bcm3148 \
 	"
+
+FILES_vuplus-blindscan-dvbt-utils-${MACHINE} = "\
+	${bindir}/ssh108_t2_scan \
+	${bindir}/tt3l10_t2_scan \
+	${bindir}/tt2l08_t2_scan \
+	${bindir}/bcm3466 \
+"
 
 INHIBIT_PACKAGE_STRIP = "1"
 
