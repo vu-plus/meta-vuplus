@@ -3,12 +3,11 @@ SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "CLOSED"
 
-PACKAGES = "vuplus-blindscan-dvbs-utils-${MACHINE} vuplus-blindscan-dvbc-utils-${MACHINE} vuplus-blindscan-dvbt-utils-${MACHINE}"
+PACKAGES = "vuplus-blindscan-dvbs-utils-${MACHINE} vuplus-blindscan-dvbc-utils-${MACHINE}"
 
 PROVIDES += "virtual/blindscan-dvbs virtual/blindscan-dvbc"
 RPROVIDES_vuplus-blindscan-dvbs-utils-${MACHINE} += "virtual/blindscan-dvbs"
 RPROVIDES_vuplus-blindscan-dvbc-utils-${MACHINE} += "virtual/blindscan-dvbc"
-RPROVIDES_vuplus-blindscan-dvbt-utils-${MACHINE} += "virtual/blindscan-dvbt"
 
 PV = "5.1"
 PR = "r0"
@@ -25,12 +24,12 @@ PLUGABLE_MODEL_BLINDSCAN = " \
 	vuplus_6211_blindscan \
 	vuplus_6222_blindscan \
 	ssh108 \
-	ssh108_t2_scan \
 	tt3l10 \
-	tt3l10_t2_scan \
 	tt2l08 \
-	tt2l08_t2_scan \
 	bcm3148 \
+	ssh108_t2_scan \
+	tt3l10_t2_scan \
+	tt2l08_t2_scan \
 	bcm3466 \
 "
 
@@ -52,9 +51,6 @@ FILES_vuplus-blindscan-dvbc-utils-${MACHINE} = "\
 	${bindir}/tt3l10 \
 	${bindir}/tt2l08 \
 	${bindir}/bcm3148 \
-	"
-
-FILES_vuplus-blindscan-dvbt-utils-${MACHINE} = "\
 	${bindir}/ssh108_t2_scan \
 	${bindir}/tt3l10_t2_scan \
 	${bindir}/tt2l08_t2_scan \

@@ -7,8 +7,5 @@ PLUGABLE_MODEL_BLINDSCAN = " \
 
 FILES_vuplus-blindscan-dvbc-utils-${MACHINE} = "\
 	${bindir}/bcm3148 \
-"
-
-FILES_vuplus-blindscan-dvbt-utils-${MACHINE} = "\
 	${bindir}/bcm3466 \
 "
