@@ -14,21 +14,11 @@ SRC_URI = " \
 
 S="${WORKDIR}/vuplus-wifi-util-${MACHINE}"
 
-do_install() {
-	install -d ${D}${bindir}
-	install -m 0755 ${S}/* ${D}${bindir}
-}
-
 do_package_qa() {
 }
 
 PACKAGE_ARCH := "${MACHINE_ARCH}"
 FILES_${PN}="/"
-
-inherit update-rc.d
-
-INITSCRIPT_PARAMS = "start 60 S ."
-INITSCRIPT_NAME = "vuplus-wifi-init.sh"
 
 do_install() {
 	install -d ${D}${bindir}
@@ -44,8 +34,12 @@ do_install() {
 	install -m 0644 ${S}/bcm43569-firmware.bin ${D}/lib/firmware/bcm43569/
 	install -m 0644 ${S}/bcm43569_iton.nvm ${D}/lib/firmware/bcm43569/
 
-        install -d ${D}${INIT_D_DIR}
-        install -m 0755 ${S}/${INITSCRIPT_NAME} ${D}${INIT_D_DIR}/${INITSCRIPT_NAME}
+	install -d ${D}${sysconfdir}/udev
+	install -m 0755 ${S}/bcmwifi_firmware.sh ${D}${sysconfdir}/udev/
+	install -m 0755 ${S}/bcmwifi_drv.sh ${D}${sysconfdir}/udev/
+
+	install -d ${D}${sysconfdir}/udev/rules.d
+	install -m 0644 ${S}/vuplus-wifi.rules ${D}${sysconfdir}/udev/rules.d/
 }
 
 INSANE_SKIP_${PN} = "already-stripped"
