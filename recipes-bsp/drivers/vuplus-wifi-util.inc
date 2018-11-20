@@ -9,7 +9,7 @@ PV="16.1"
 PR="${SRCDATE}.${SRCDATE_PR}"
 
 SRC_URI = " \
-    http://archive.vuplus.com/download/build_support/vuplus/vuplus-wifi-util-${MACHINE}-${PV}-${PR}.tar.gz \
+    http://archive.vuplus.com/download/build_support/vuplus/vuplus-wifi-util-${MACHINE}-${PV}-${SRCDATE}.${SRCDATE_PR}.tar.gz \
 "
 
 S="${WORKDIR}/vuplus-wifi-util-${MACHINE}"
@@ -34,12 +34,9 @@ do_install() {
 	install -m 0644 ${S}/bcm43569-firmware.bin ${D}/lib/firmware/bcm43569/
 	install -m 0644 ${S}/bcm43569_iton.nvm ${D}/lib/firmware/bcm43569/
 
-	install -d ${D}${sysconfdir}/udev
-	install -m 0755 ${S}/bcmwifi_firmware.sh ${D}${sysconfdir}/udev/
-	install -m 0755 ${S}/bcmwifi_drv.sh ${D}${sysconfdir}/udev/
-
-	install -d ${D}${sysconfdir}/udev/rules.d
-	install -m 0644 ${S}/vuplus-wifi.rules ${D}${sysconfdir}/udev/rules.d/
+	install -d ${D}${sysconfdir}/mdev
+	install -m 0755 ${S}/bcmwifi_firmware.sh ${D}${sysconfdir}/mdev/
+	install -m 0755 ${S}/bcmwifi_drv.sh ${D}${sysconfdir}/mdev/
 }
 
 INSANE_SKIP_${PN} = "already-stripped"
