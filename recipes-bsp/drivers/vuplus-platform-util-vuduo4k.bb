@@ -3,8 +3,8 @@ require vuplus-platform-util.inc
 RDEPENDS_${PN} += "gptfdisk"
 
 PV="18.1"
-SRCDATE = "20181116"
-SRCDATE_PR = "r1"
+SRCDATE = "20181120"
+SRCDATE_PR = "r0"
 
 SRC_URI += "\
 	file://bp3flash.tar.gz \
@@ -14,5 +14,5 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/bp3flash.py ${D}${bindir}
 }
 
-SRC_URI[md5sum] = "9a2da169e299c72ed41e588719688911"
-SRC_URI[sha256sum] = "bafa1a4cd437d434f9522ae16b4b325dc1e7118415e14aee5876928190f9ca96"
+SRC_URI[md5sum] = "1b207a8924c990d28fabd87d97447f9c"
+SRC_URI[sha256sum] = "50f9dd94b0a06b3f7ddeb88b8766e6b79853f5460c7c0ac5c29ce6c1b656a882"
