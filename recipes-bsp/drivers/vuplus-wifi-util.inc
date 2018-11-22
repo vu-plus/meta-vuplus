@@ -33,10 +33,6 @@ do_install() {
 	install -d ${D}/lib/firmware/bcm43569/
 	install -m 0644 ${S}/bcm43569-firmware.bin ${D}/lib/firmware/bcm43569/
 	install -m 0644 ${S}/bcm43569_iton.nvm ${D}/lib/firmware/bcm43569/
-
-	install -d ${D}${sysconfdir}/mdev
-	install -m 0755 ${S}/bcmwifi_firmware.sh ${D}${sysconfdir}/mdev/
-	install -m 0755 ${S}/bcmwifi_drv.sh ${D}${sysconfdir}/mdev/
 }
 
 INSANE_SKIP_${PN} = "already-stripped"
