@@ -2,7 +2,7 @@ require vuplus-dvb-proxy.inc
 
 KV = "4.1.20"
 
-SRCDATE = "20181005"
+SRCDATE = "20181204"
 SRCDATE_PR = "r0"
 
 pkg_postinst_${PN}_append () {
@@ -11,5 +11,5 @@ pkg_postinst_${PN}_append () {
 	fi
 }
 
-SRC_URI[md5sum] = "1556756b66f3efae44b8746173e55cdc"
-SRC_URI[sha256sum] = "a069db6a74a8ec20b0be3077cc8f3759a65e43b56e12a5b68de5f2d7da081b9f"
+SRC_URI[md5sum] = "15c4a79a217c0a5c77267d232626ccb3"
+SRC_URI[sha256sum] = "fadeefb886392ba9c2b5e7d2c6c096b1590a6e9b7d49b4a0c1393bc70003cc49"
