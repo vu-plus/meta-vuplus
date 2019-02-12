@@ -3,7 +3,7 @@ require vuplus-platform-util.inc
 RDEPENDS_${PN} += "gptfdisk mmc-utils"
 
 PV="18.1"
-SRCDATE = "20190130"
+SRCDATE = "20190212"
 SRCDATE_PR = "r0"
 PR_append = ".2"
 
@@ -15,5 +15,5 @@ do_install_append() {
 	install -m 0755 ${WORKDIR}/bp3flash.py ${D}${bindir}
 }
 
-SRC_URI[md5sum] = "3ee429c48cecb631684087a56cab349e"
-SRC_URI[sha256sum] = "977f440a7bc2657712543bc2d7fb3a3d93650d992702567a6bbcc2f3a4aed7f1"
+SRC_URI[md5sum] = "93a8bde7e864be5dd7b98dccef86a40a"
+SRC_URI[sha256sum] = "13998358005b919aaf9558fff43f81fe56e2db6e0bf4877ad33a43736df78b91"
