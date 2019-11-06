@@ -25,6 +25,9 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-${KSRC_VER}.tar.b
 	${@bb.utils.contains("MACHINE_FEATURES", "dvbproxy", "file://linux_dvb_adapter.patch", "", d)} \
 	file://kernel-gcc6.patch \
 	file://kernel-gcc7.patch \
+	file://kernel-gcc8.patch \
+	file://0003-mips-kernel-ilog2-gcc7.patch \
+	file://0003-3.x-uaccess-dont-mark-register-as-const.patch \
 	file://${MACHINE}_defconfig \
 	"
 

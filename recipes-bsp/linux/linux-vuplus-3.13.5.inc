@@ -26,6 +26,7 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-${KV}.tar.bz2 \
 	file://0003-mips-kernel-ilog2-gcc7.patch \
 	file://kernel-gcc6.patch \
 	file://kernel-gcc7.patch \
+	file://kernel-gcc8.patch \
 	${@bb.utils.contains("MACHINE_FEATURES", "dvbproxy", "file://linux_dvb_adapter.patch", "", d)} \
 	file://${MACHINE}_defconfig \
 	"
@@ -39,18 +40,21 @@ KERNEL_IMAGETYPE = "vmlinux"
 KERNEL_OUTPUT = "vmlinux"
 KERNEL_OUTPUT_DIR = "."
 KERNEL_OBJECT_SUFFIX = "ko"
-KERNEL_IMAGEDEST = "/tmp"
+KERNEL_IMAGEDEST = "tmp"
 
-FILES_kernel-image = "${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz"
+KERNEL_EXTRA_ARGS = "EXTRA_CFLAGS=-Wno-attribute-alias"
+KERNEL_PACKAGE_NAME = "kernel"
+
+FILES_${KERNEL_PACKAGE_NAME}-image = "${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz"
 
 do_configure_prepend() {
 	oe_machinstall -m 0644 ${WORKDIR}/${MACHINE}_defconfig ${WORKDIR}/defconfig
 }
 
 kernel_do_install_append() {
-	install -d ${D}/${KERNEL_IMAGEDEST}
-	install -m 0755 ${KERNEL_OUTPUT} ${D}${KERNEL_IMAGEDEST}
-	gzip ${D}${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}
+	${STRIP} ${D}/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}-${KERNEL_VERSION}
+	gzip -9c ${D}/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}-${KERNEL_VERSION} > ${D}/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz
+	rm ${D}/${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}-${KERNEL_VERSION}
 }
 
 pkg_postinst_kernel-image () {
@@ -61,3 +65,6 @@ pkg_postinst_kernel-image () {
 	rm -f /${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz
 	true
 }
+
+# extra tasks
+addtask kernel_link_images after do_compile before do_install
