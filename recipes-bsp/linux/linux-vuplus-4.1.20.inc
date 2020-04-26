@@ -2,7 +2,7 @@ DESCRIPTION = "Linux kernel for ${MACHINE}"
 LICENSE = "GPLv2"
 SECTION = "kernel"
 KV = "4.1.20"
-PR_INC = ".0"
+PR_INC = ".1"
 
 SRC_URI[md5sum] = "b3e5d84c2d1b16d191a7adfe96951b2f"
 SRC_URI[sha256sum] = "74648ddfe77e95e06ca3ab1b398ff26f7dd317767dbab3d27ebdd2b9d33bba51"
@@ -19,8 +19,33 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-${KSRC_VER}.tar.b
 	file://kernel-gcc6.patch \
 	file://kernel-gcc7.patch \
 	file://kernel-gcc8.patch \
+	file://0001-regmap-add-regmap_write_bits.patch \
+	file://0002-af9035-fix-device-order-in-ID-list.patch \
+	file://0003-Add-support-for-dvb-usb-stick-Hauppauge-WinTV-soloHD.patch \
+	file://0004-af9035-add-USB-ID-07ca-0337-AVerMedia-HD-Volar-A867.patch \
+	file://0005-Add-support-for-EVOLVEO-XtraTV-stick.patch \
+	file://0006-dib8000-Add-support-for-Mygica-Geniatech-S2870.patch \
+	file://0007-dib0700-add-USB-ID-for-another-STK8096-PVR-ref-desig.patch \
+	file://0008-add-Hama-Hybrid-DVB-T-Stick-support.patch \
+	file://0009-Add-Terratec-H7-Revision-4-to-DVBSky-driver.patch \
+	file://0010-media-Added-support-for-the-TerraTec-T1-DVB-T-USB-tu.patch \
+	file://0011-media-tda18250-support-for-new-silicon-tuner.patch \
+	file://0012-media-dib0700-add-support-for-Xbox-One-Digital-TV-Tu.patch \
+	file://0013-mn88472-Fix-possible-leak-in-mn88472_init.patch \
+	file://0014-staging-media-Remove-unneeded-parentheses.patch \
+	file://0015-staging-media-mn88472-simplify-NULL-tests.patch \
+	file://0016-mn88472-fix-typo.patch \
+	file://0017-mn88472-finalize-driver.patch \
+	file://0001-dvb-usb-fix-a867.patch \
+	file://0001-Support-TBS-USB-drivers-for-4.1-kernel.patch \
+	file://0001-TBS-fixes-for-4.1-kernel.patch \
+	file://0001-STV-Add-PLS-support.patch \
+	file://0001-STV-Add-SNR-Signal-report-parameters.patch \
+	file://blindscan2.patch \
+	file://0001-stv090x-optimized-TS-sync-control.patch \
 	file://0002-log2-give-up-on-gcc-constant-optimizations.patch \
 	file://0003-dont-mark-register-as-const.patch \
+	file://kernel-add-support-for-gcc9.patch \
 	file://${MACHINE}_defconfig \
 	"
 
@@ -34,7 +59,7 @@ KERNEL_OUTPUT = "arch/${ARCH}/boot/${KERNEL_IMAGETYPE}"
 KERNEL_OBJECT_SUFFIX = "ko"
 KERNEL_IMAGEDEST = "tmp"
 
-FILES_kernel-image = "/${KERNEL_IMAGEDEST}/zImage"
+FILES_${KERNEL_PACKAGE_NAME}-image = "/${KERNEL_IMAGEDEST}/zImage"
 
 do_configure_prepend() {
 	oe_machinstall -m 0644 ${WORKDIR}/${MACHINE}_defconfig ${WORKDIR}/defconfig

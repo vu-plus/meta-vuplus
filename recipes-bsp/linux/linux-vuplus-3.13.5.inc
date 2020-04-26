@@ -2,7 +2,7 @@ DESCRIPTION = "Linux kernel for ${MACHINE}"
 LICENSE = "GPLv2"
 SECTION = "kernel"
 KV = "3.13.5"
-PR_INC = ".6"
+PR_INC = ".7"
 
 SRC_URI[md5sum] = "19e9956653437b99b4fa6ec3e16a3e99"
 SRC_URI[sha256sum] = "ef7fb307582ff243aacff8a13025fe028634aaf650ada309991ae03622962f61"
@@ -26,8 +26,11 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-${KV}.tar.bz2 \
 	file://0003-mips-kernel-ilog2-gcc7.patch \
 	file://kernel-gcc6.patch \
 	file://kernel-gcc7.patch \
+	file://2-2-stv090x-on-tuning-lock-return-correct-tuned-paramaters-like-freq-sr-fec-rolloff-etc.patch \
+	file://hvr-9x5-19x5-22x5-kernel-3.13.patch \
 	file://kernel-gcc8.patch \
 	${@bb.utils.contains("MACHINE_FEATURES", "dvbproxy", "file://linux_dvb_adapter.patch", "", d)} \
+	file://kernel-add-support-for-gcc9.patch \
 	file://${MACHINE}_defconfig \
 	"
 
