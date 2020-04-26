@@ -6,4 +6,4 @@ SRC_URI += "\
 	file://linux-sata_bcm.patch \
 	"
 
-COMPATIBLE_MACHINE = "vuduo"
+COMPATIBLE_MACHINE = "^(vuduo)$"

@@ -27,7 +27,11 @@ SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-${KV}.tar.bz2 \
 	file://0003-mips-kernel-ilog2-gcc7.patch \
 	file://kernel-gcc6.patch \
 	file://kernel-gcc7.patch \
+	file://2-2-stv090x-on-tuning-lock-return-correct-tuned-paramaters-like-freq-sr-fec-rolloff-etc.patch \
 	file://kernel-gcc8.patch \
+	file://kernel-add-support-for-gcc9.patch \
+	file://add-attributes-fix-modules-compile.patch \
+	file://makefile-silence-warnings.patch \
 	file://${MACHINE}_defconfig \
 	"
 
@@ -42,7 +46,7 @@ KERNEL_OUTPUT_DIR = "."
 KERNEL_OBJECT_SUFFIX = "ko"
 KERNEL_IMAGEDEST = "/tmp"
 
-FILES_kernel-image = "${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz"
+FILES_${KERNEL_PACKAGE_NAME}-image = "${KERNEL_IMAGEDEST}/${KERNEL_IMAGETYPE}.gz"
 
 do_configure_prepend() {
 	oe_machinstall -m 0644 ${WORKDIR}/${MACHINE}_defconfig ${WORKDIR}/defconfig

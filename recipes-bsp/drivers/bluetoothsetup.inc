@@ -27,9 +27,9 @@ do_install() {
 
 FILES_${PN} = "${BLUETOOTH_PLUGIN_PATH}"
 
-do_populate_sysroot[noexec] = "1"
+#do_populate_sysroot[noexec] = "1"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-INSANE_SKIP_${PN} = "already-stripped"
+INSANE_SKIP_${PN} = "already-stripped file-rdeps"
 
