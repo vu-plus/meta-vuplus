@@ -1,0 +1,10 @@
+diff --git a/Source/WebCore/config.h b/Source/WebCore/config.h
+index cce2d51..e0e37f2 100644
+--- a/Source/WebCore/config.h
++++ b/Source/WebCore/config.h
+@@ -234,3 +234,5 @@ typedef float CGFloat;
+ #if PLATFORM(WIN) && HAVE(AVCF)
+ #define WTF_USE_AVFOUNDATION 1
+ #endif
++
++#define LIBSOUP_USE_UNSTABLE_REQUEST_API
