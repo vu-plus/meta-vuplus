@@ -25,6 +25,7 @@ SRC_URI = "git://code.vuplus.com/git/webkit-r95199-base.git;protocol=http;branch
     file://0001-fix-build-issue-with-cglib-2.2.4.patch \
     file://webkit-gtk_fixed_crash_error.patch \
     file://maketokenizer.patch \
+    file://fix-build-webcore-config-on-zeus.patch \
 "
 
 inherit autotools lib_package gtk-doc pkgconfig perlnative pythonnative
