@@ -1,5 +1,7 @@
 DESCRIPTION = "Vuplus bluetooth plugin"
 
+inherit pythonnative
+
 LICENSE = "CLOSED"
 
 DEPENDS = "python-native"
