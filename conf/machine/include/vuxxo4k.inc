@@ -62,7 +62,7 @@ IMAGE_CMD_tar_prepend = " \
         rm -rf vuplus; \
 "
 
-MACHINE_FEATURES += "alsa usbhost wlan kernelwifi extrakernelwifi 3dtv switchoff osdposition hdmicec"
+MACHINE_FEATURES += "alsa usbhost wlan 3dtv switchoff osdposition hdmicec"
 
 require conf/machine/include/arm/arch-armv7a.inc
 

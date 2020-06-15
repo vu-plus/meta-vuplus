@@ -70,7 +70,7 @@ IMAGE_CMD_ubi_append = " \
 	rm -rf vuplus; \
 "
 
-MACHINE_FEATURES += "alsa usbhost wlan kernelwifi extrakernelwifi 3dtv switchoff osdposition hdmicec fan"
+MACHINE_FEATURES += "alsa usbhost wlan 3dtv switchoff osdposition hdmicec fan"
 
 require conf/machine/include/tune-mips32.inc
 
