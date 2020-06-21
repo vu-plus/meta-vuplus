@@ -13,7 +13,7 @@ diff --git a/drivers/media/dvb-core/dvb-usb-ids.h b/drivers/media/dvb-core/dvb-u
 index c117fb3..5e0735b 100644
 --- a/drivers/media/dvb-core/dvb-usb-ids.h
 +++ b/drivers/media/dvb-core/dvb-usb-ids.h
-@@ -70,6 +70,7 @@
+@@ -72,6 +72,7 @@
  #define USB_VID_TECHNISAT			0x14f7
  #define USB_VID_HAMA				0x147f
  #define USB_VID_MICROSOFT			0x045e
@@ -21,7 +21,7 @@ index c117fb3..5e0735b 100644
  
  /* Product IDs */
  #define USB_PID_ADSTECH_USB2_COLD			0xa333
-@@ -388,4 +389,10 @@
+@@ -399,4 +400,10 @@
  #define USB_PID_EVOLVEO_XTRATV_STICK			0xa115
  #define USB_PID_HAMA_DVBT_HYBRID			0x2758
  #define USB_PID_XBOX_ONE_TUNER                          0x02d5
@@ -36,7 +36,7 @@ diff --git a/drivers/media/dvb-frontends/cx24116.c b/drivers/media/dvb-frontends
 index 8814f36..5ccfeb3 100644
 --- a/drivers/media/dvb-frontends/cx24116.c
 +++ b/drivers/media/dvb-frontends/cx24116.c
-@@ -705,6 +705,9 @@ static int cx24116_read_status(struct dvb_frontend *fe, enum fe_status *status)
+@@ -703,6 +703,9 @@ static int cx24116_read_status(struct dvb_frontend *fe, enum fe_status *status)
  	if (lock & CX24116_HAS_SYNCLOCK)
  		*status |= FE_HAS_SYNC | FE_HAS_LOCK;
  
@@ -46,7 +46,7 @@ index 8814f36..5ccfeb3 100644
  	return 0;
  }
  
-@@ -1113,6 +1116,10 @@ static void cx24116_release(struct dvb_frontend *fe)
+@@ -1115,6 +1118,10 @@ static void cx24116_release(struct dvb_frontend *fe)
  {
  	struct cx24116_state *state = fe->demodulator_priv;
  	dprintk("%s\n", __func__);
@@ -57,7 +57,7 @@ index 8814f36..5ccfeb3 100644
  	kfree(state);
  }
  
-@@ -1198,6 +1205,9 @@ static int cx24116_sleep(struct dvb_frontend *fe)
+@@ -1210,6 +1217,9 @@ static int cx24116_sleep(struct dvb_frontend *fe)
  
  	dprintk("%s()\n", __func__);
  
@@ -85,7 +85,7 @@ diff --git a/drivers/media/dvb-frontends/stv0288.c b/drivers/media/dvb-frontends
 index c93d9a4..9dcd922 100644
 --- a/drivers/media/dvb-frontends/stv0288.c
 +++ b/drivers/media/dvb-frontends/stv0288.c
-@@ -382,6 +382,9 @@ static int stv0288_read_status(struct dvb_frontend *fe, enum fe_status *status)
+@@ -381,6 +381,9 @@ static int stv0288_read_status(struct dvb_frontend *fe, enum fe_status *status)
  		dprintk("stv0288 has locked\n");
  	}
  
@@ -95,7 +95,7 @@ index c93d9a4..9dcd922 100644
  	return 0;
  }
  
-@@ -416,6 +419,9 @@ static int stv0288_sleep(struct dvb_frontend *fe)
+@@ -421,6 +424,9 @@ static int stv0288_sleep(struct dvb_frontend *fe)
  {
  	struct stv0288_state *state = fe->demodulator_priv;
  
@@ -105,7 +105,7 @@ index c93d9a4..9dcd922 100644
  	stv0288_writeregI(state, 0x41, 0x84);
  	state->initialised = 0;
  
-@@ -533,6 +539,10 @@ static int stv0288_i2c_gate_ctrl(struct dvb_frontend *fe, int enable)
+@@ -544,6 +550,10 @@ static int stv0288_i2c_gate_ctrl(struct dvb_frontend *fe, int enable)
  static void stv0288_release(struct dvb_frontend *fe)
  {
  	struct stv0288_state *state = fe->demodulator_priv;
@@ -144,7 +144,7 @@ index 25bdf6e..ce99b9d 100644
  	return 0;
  }
  
-@@ -3907,6 +3910,9 @@ static int stv090x_sleep(struct dvb_frontend *fe)
+@@ -3912,6 +3915,9 @@ static int stv090x_sleep(struct dvb_frontend *fe)
  	u32 reg;
  	u8 full_standby = 0;
  
@@ -154,7 +154,7 @@ index 25bdf6e..ce99b9d 100644
  	if (stv090x_i2c_gate_ctrl(state, 1) < 0)
  		goto err;
  
-@@ -4138,6 +4144,9 @@ static void stv090x_release(struct dvb_frontend *fe)
+@@ -4149,6 +4155,9 @@ static void stv090x_release(struct dvb_frontend *fe)
  {
  	struct stv090x_state *state = fe->demodulator_priv;
  
@@ -181,7 +181,7 @@ diff --git a/drivers/media/dvb-frontends/tda10071.h b/drivers/media/dvb-frontend
 index 8f18402..891e007 100644
 --- a/drivers/media/dvb-frontends/tda10071.h
 +++ b/drivers/media/dvb-frontends/tda10071.h
-@@ -49,6 +49,9 @@ struct tda10071_platform_data {
+@@ -37,6 +37,9 @@ struct tda10071_config {
  	 */
  	u8 tuner_i2c_addr;
  
@@ -190,12 +190,12 @@ index 8f18402..891e007 100644
 +
  	/* Max bytes I2C provider can write at once.
  	 * Note: Buffer is taken from the stack currently!
- 
+	 * Default: none, must set
 diff --git a/drivers/media/usb/dvb-usb/Kconfig b/drivers/media/usb/dvb-usb/Kconfig
 index 128eee6..49c34f9 100644
 --- a/drivers/media/usb/dvb-usb/Kconfig
 +++ b/drivers/media/usb/dvb-usb/Kconfig
-@@ -320,3 +320,23 @@ config DVB_USB_TECHNISAT_USB2
+@@ -322,3 +322,23 @@ config DVB_USB_TECHNISAT_USB2
  	select DVB_STV6110x if MEDIA_SUBDRV_AUTOSELECT
  	help
  	  Say Y here to support the Technisat USB2 DVB-S/S2 device
