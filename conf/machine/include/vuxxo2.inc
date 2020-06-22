@@ -32,7 +32,7 @@ DEFAULTTUNE = "mips32el"
 
 DVBMEDIASINK_CONFIG = "--with-wmv --with-pcm --with-eac3"
 
-+PREFERRED_VERSION_kernel-module-88x2bu = "1.0.0.9"
+PREFERRED_VERSION_kernel-module-88x2bu = "1.0.0.9"
 PREFERRED_VERSION_linux-${MACHINE} = "3.13.5"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-${MACHINE}"
