@@ -12,11 +12,11 @@ diff -upr linux/drivers/media/tuners/mxl5007t.h linux.new/drivers/media/tuners/m
 +	unsigned int no_reset:1;
  };
  
- #if defined(CONFIG_MEDIA_TUNER_MXL5007T) || (defined(CONFIG_MEDIA_TUNER_MXL5007T_MODULE) && defined(MODULE))
+ #if IS_REACHABLE(CONFIG_MEDIA_TUNER_MXL5007T)
 diff -upr linux/drivers/media/usb/dvb-usb-v2/af9035.c linux.new/drivers/media/usb/dvb-usb-v2/af9035.c
 --- linux/drivers/media/usb/dvb-usb-v2/af9035.c	2013-01-07 05:45:57.000000000 +0100
 +++ linux.new/drivers/media/usb/dvb-usb-v2/af9035.c	2013-01-12 00:30:57.557310465 +0100
-@@ -886,13 +886,17 @@ static struct mxl5007t_config af9035_mxl
+@@ -1250,13 +1250,17 @@ static struct mxl5007t_config af9035_mxl
  		.loop_thru_enable = 0,
  		.clk_out_enable = 0,
  		.clk_out_amp = MxL_CLKOUT_AMP_0_94V,
