@@ -57,6 +57,7 @@ IMAGE_CMD_ubi_prepend = " \
 	cp -f ${IMAGE_ROOTFS}/boot/initrd_cfe_auto.bin ${IMGDEPLOYDIR}/${IMAGE_NAME}.initrd_cfe_auto.bin; \
 	rm -rf ${IMAGE_ROOTFS}/tmp/vmlinux.gz; \
 	rm -rf ${IMAGE_ROOTFS}/boot/initrd_cfe_auto.bin; \
+	rm -Rf ${IMAGE_ROOTFS}/tmp/*; \
 "
 
 IMAGE_CMD_ubi_append = " \

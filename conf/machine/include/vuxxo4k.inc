@@ -54,6 +54,7 @@ IMAGE_CMD_tar_prepend = " \
         rm -rf ${IMAGE_ROOTFS}/tmp/zImage; \
         rm -rf ${IMAGE_ROOTFS}/boot/initrd_auto.bin; \
         cd ${IMAGE_ROOTFS}; \
+        rm -Rf ${IMAGE_ROOTFS}/tmp/*; \
         tar -cvf ${IMGDEPLOYDIR}/rootfs.tar -C ${IMAGE_ROOTFS} .; \
         mv -f ${IMGDEPLOYDIR}/rootfs.tar ${IMGDEPLOYDIR}/vuplus/${UPDATE_DIR}/rootfs.tar; \
         bzip2 ${IMGDEPLOYDIR}/vuplus/${UPDATE_DIR}/rootfs.tar; \
