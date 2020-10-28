@@ -1,6 +1,6 @@
 require linux-vuplus-4.1.45.inc
 
-MACHINE_KERNEL_PR_append = "${PR_INC}.2"
+MACHINE_KERNEL_PR_append = "${PR_INC}.3"
 
 KSRC_VER = "4.1-1.17"
 
