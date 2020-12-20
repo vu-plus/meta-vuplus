@@ -63,7 +63,22 @@ IMAGE_CMD_tar_prepend = " \
         rm -rf vuplus; \
 "
 
-MACHINE_FEATURES += "alsa usbhost wlan 3dtv switchoff osdposition hdmicec"
+MACHINE_FEATURES += "alsa usbhost wlan 3dtv switchoff osdposition hdmicec HDMI"
 
 require conf/machine/include/arm/arch-armv7a.inc
 
+BOX_BRAND = "vuplus"
+
+STB_PLATFORM = "vu4kgen"
+
+EXTRA_ALSA = "vuplus"
+
+EXTRA_OECONF_append_pn-transtreamproxy = " --enable-ext-pid"
+
+BLINDSCAN_BINARY = "vuplus_blindscan"
+
+RCNAME ?= "vu"
+
+KERNEL_FILE = "kernel_auto.bin"
+ROOTFS_FILE = "rootfs.tar.bz2"
+MTD_BLACK  = "mmcblk0"
