@@ -60,6 +60,19 @@ IMAGE_CMD_ubi_append = " \
 	rm -rf vuplus; \
 "
 
-MACHINE_FEATURES += "alsa usbhost wlan 3dtv switchoff osdposition hdmicec"
+MACHINE_FEATURES += "alsa usbhost wlan 3dtv switchoff osdposition hdmicec HDMI SCART"
 
 require conf/machine/include/tune-mips32.inc
+
+BOX_BRAND = "vuplus"
+
+STB_PLATFORM = "vu1gen"
+
+BLINDSCAN_BINARY = "vuplus_blindscan"
+
+RCNAME ?= "vu"
+
+MTD_KERNEL = "mtd1"
+MTD_ROOTFS = "mtd0"
+KERNEL_FILE = "kernel_cfe_auto.bin"
+ROOTFS_FILE = "root_cfe_auto.jffs2"
