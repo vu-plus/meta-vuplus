@@ -12,7 +12,7 @@ LIC_FILES_CHKSUM = "file://${WORKDIR}/linux/COPYING;md5=d7810fab7487fb0aad327b76
 FILESEXTRAPATHS_prepend := "${THISDIR}/linux-vuplus-${KV}:"
 
 KSRC_VER = "3.14-1.8"
-SRC_URI += "http://archive.vuplus.com/download/kernel/stblinux-${KSRC_VER}.tar.bz2 \
+SRC_URI += "http://code.vuplus.com/download/release/kernel/stblinux-${KSRC_VER}.tar.bz2 \
 	file://bcm_genet_disable_warn.patch \
 	file://linux_dvb-core.patch \
 	file://rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \

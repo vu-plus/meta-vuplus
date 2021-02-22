@@ -5,7 +5,7 @@ PR = "${GLPR}"
 
 DEPENDS = "virtual/libgles2 virtual/egl"
 
-SRC_URI = "http://archive.vuplus.com/download/build_support/kodi/xbmc-support_${MACHINE}_${GLPR}.tar.gz"
+SRC_URI = "http://code.vuplus.com/download/release/kodi/xbmc-support_${MACHINE}_${GLPR}.tar.gz"
 
 # The driver is a set of binary libraries to install
 # there is nothing to configure or compile

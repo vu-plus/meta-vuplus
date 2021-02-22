@@ -5,7 +5,7 @@ PV="15.1"
 PR="${SRCDATE}.${SRCDATE_PR}"
 
 SRC_URI = " \
-    http://archive.vuplus.com/download/build_support/vuplus/platform-util-${MACHINE}-${PV}-${SRCDATE}.${SRCDATE_PR}.tar.gz \
+    http://code.vuplus.com/download/release/platform-util/platform-util-${MACHINE}-${PV}-${SRCDATE}.${SRCDATE_PR}.tar.gz \
     file://${INITSCRIPT_NAME}.sysvinit \
 "
 

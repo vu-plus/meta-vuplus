@@ -8,7 +8,7 @@ PV = "1.0"
 PR = "${SRCDATE}_r1"
 SRC_REV = ""
 
-SRC_URI = "http://archive.vuplus.com/openpli-support/vuplus-coldboot_${SRCDATE}.tar.gz"
+SRC_URI = "http://code.vuplus.com/download/release/openpli-support/vuplus-coldboot_${SRCDATE}.tar.gz"
 
 do_install() {
 	install -d ${D}/etc/init.d \
