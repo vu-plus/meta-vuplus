@@ -2,8 +2,6 @@ SECTION = "base"
 LICENSE = "CLOSED"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/vuplus-libgles:"
-
 PROVIDES = "virtual/libgles2 virtual/egl"
 RPROVIDES_${PN} = "libEGL.so libGLESv2.so libdvb_base.so libdvb_client.so libnxpl.so libv3ddriver.so"
 
@@ -46,7 +44,7 @@ do_install() {
 
 INHIBIT_PACKAGE_STRIP = "1"
 INHIBIT_SYSROOT_STRIP = "1"
-INHIBIT_PACKAGE_DEBUG_SPLIT  = "1"
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
 SOLIBS = ".so"
 FILES_SOLIBSDEV = ""
