@@ -1,8 +1,11 @@
 SECTION = "base"
 LICENSE = "CLOSED"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+
+FILESEXTRAPATHS_prepend := "${THISDIR}/vuplus-libgles:"
 
 PROVIDES = "virtual/libgles2 virtual/egl"
-COMPATIBLE_MACHINE = "vu"
+RPROVIDES_${PN} = "libEGL.so libGLESv2.so libdvb_base.so libdvb_client.so libnxpl.so libv3ddriver.so"
 
 PV="15.1"
 PR="${SRCDATE}.${SRCDATE_PR}"
@@ -41,14 +44,12 @@ do_install() {
 	cp -a ${S}/include/* ${D}${includedir}/
 }
 
-do_package_qa[noexec] = "1"
+INHIBIT_PACKAGE_STRIP = "1"
+INHIBIT_SYSROOT_STRIP = "1"
+INHIBIT_PACKAGE_DEBUG_SPLIT  = "1"
 
-PACKAGE_ARCH := "${MACHINE_ARCH}"
+SOLIBS = ".so"
 FILES_SOLIBSDEV = ""
-FILES_${PN}="${libdir}"
 
-RPROVIDES_${PN} = "libEGL.so libGLESv2.so libdvb_base.so libdvb_client.so libnxpl.so libv3ddriver.so"
-
-INSANE_SKIP_${PN} = "already-stripped"
-
-FILESEXTRAPATHS_prepend := "${THISDIR}/vuplus-libgles:"
+# skip the check: we purposedly have two symlinks in the main package
+INSANE_SKIP_${PN} = "dev-so"
