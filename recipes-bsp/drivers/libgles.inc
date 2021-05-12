@@ -4,7 +4,6 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 PROVIDES = "virtual/libgles2 virtual/egl"
 RPROVIDES_${PN} = "libEGL.so libGLESv2.so libdvb_base.so libdvb_client.so libnxpl.so libv3ddriver.so"
-COMPATIBLE_MACHINE = "vu"
 
 PV="15.1"
 PR="${SRCDATE}.${SRCDATE_PR}"
@@ -43,14 +42,12 @@ do_install() {
 	cp -a ${S}/include/* ${D}${includedir}/
 }
 
-do_package_qa[noexec] = "1"
 INHIBIT_PACKAGE_STRIP = "1"
 INHIBIT_SYSROOT_STRIP = "1"
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
 
 SOLIBS = ".so"
 FILES_SOLIBSDEV = ""
-FILES_${PN}="${libdir}"
 
 # skip the check: we purposedly have two symlinks in the main package
 INSANE_SKIP_${PN} = "dev-so"
