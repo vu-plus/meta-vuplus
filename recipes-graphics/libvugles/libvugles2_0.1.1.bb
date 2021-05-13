@@ -9,7 +9,7 @@ RDEPENDS_${PN} = "libgles-${MACHINE}"
 
 PR = "${SRCDATE}.${SRCDATE_PR}"
 
-require libvugles2-${TARGET_ARCH}.inc
+include libvugles2-${TARGET_ARCH}.inc
 
 S = "${WORKDIR}/${PN}-${PV}"
 
