@@ -1,0 +1,9 @@
+SRCDATE = "20170905"
+SRCDATE_PR = "r1"
+
+COMPATIBLE_MACHINE = "^(vuduo2)$"
+
+SRC_URI[md5sum] = "63b2b25f4b11cd8151592302cabd375e"
+SRC_URI[sha256sum] = "569b73ba3a6355b2d0c6723f76b93b4845f64309e5930f5f23c6ad5c9da8a418"
+
+include libvugles2.inc
