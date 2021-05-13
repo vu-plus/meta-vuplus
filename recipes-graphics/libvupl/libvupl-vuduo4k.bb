@@ -1,4 +1,3 @@
-PV = "0.1.0"
 SRCDATE = "20181109"
 SRCDATE_PR = "r1"
 

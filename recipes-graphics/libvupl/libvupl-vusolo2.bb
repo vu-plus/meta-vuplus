@@ -1,6 +1,5 @@
 SRCDATE = "20180502"
 SRCDATE_PR = "r1"
-PV = "0.1.0"
 
 COMPATIBLE_MACHINE = "^(vusolo2)$"
 
