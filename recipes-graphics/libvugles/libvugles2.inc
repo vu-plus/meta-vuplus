@@ -3,15 +3,21 @@ SECTION = "libs"
 LICENSE = "CLOSED"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-COMPATIBLE_MACHINE = "^(vusolose|vusolo2|vuduo2|vusolo4k|vuuno4k|vuuno4kse|vuultimo4k|vuzero4k|vuduo4k|vuduo4kse)$"
+DEPENDS_vuduo2 = "libgles-${MACHINE}"
+DEPENDS_vusolo2 = "libgles-${MACHINE}"
+DEPENDS_vusolose = "libgles-${MACHINE}"
 
 RDEPENDS_${PN} = "libgles-${MACHINE}"
 
+PV = "0.1.1"
 PR = "${SRCDATE}.${SRCDATE_PR}"
 
-require libvugles2-${TARGET_ARCH}.inc
+SRC_URI = "http://code.vuplus.com/download/release/libvugles2/libvugles2-${PV}-${MACHINE}-${PR}.tar.gz"
+SRC_URI_vuduo2 = "http://code.vuplus.com/download/release/libvugles2/libvugles2-${PV}-${PR}.tar.gz"
+SRC_URI_vusolo2 = "http://code.vuplus.com/download/release/libvugles2/libvugles2-${PV}-${PR}.tar.gz"
+SRC_URI_vusolose = "http://code.vuplus.com/download/release/libvugles2/libvugles2-${PV}-${PR}.tar.gz"
 
-S = "${WORKDIR}/${PN}-${PV}"
+S = "${WORKDIR}/libvugles2-${PV}"
 
 inherit pkgconfig
 
