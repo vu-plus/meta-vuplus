@@ -3,12 +3,12 @@ require vuplus-wifi-util.inc
 COMPATIBLE_MACHINE = "^(vuduo4kse)$"
 
 PV="17.1"
-SRCDATE = "20201228"
+SRCDATE = "20210428"
 SRCDATE_PR = "r0"
 PR_append = ".0"
 
-SRC_URI[md5sum] = "df509ddc241fe1cc5b44ed3c58375ad5"
-SRC_URI[sha256sum] = "0ed3daa8883f21000b7e2d935e5bf27a13471dbc5df0444baa9fac4328d7f666"
+SRC_URI[md5sum] = "1258a3792ed175ca36236ba8f230bba9"
+SRC_URI[sha256sum] = "fc5c1ba0ca9bad56c164b3065773f9820693cebc83c02293ae0e6a47e7402fd0"
 
 inherit update-rc.d
 
