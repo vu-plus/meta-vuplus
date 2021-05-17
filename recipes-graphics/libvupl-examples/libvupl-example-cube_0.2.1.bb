@@ -4,6 +4,9 @@ HOMEPAGE = "https://code.google.com/archive/p/opengles-book-samples/"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=7c01ce978e205f99897d26c061b2c09a"
 
+PACKAGE_ARCH = "${MACHINE_ARCH}"
+COMPATIBLE_MACHINE = "^(vusolose|vusolo2|vuduo2|vusolo4k|vuuno4k|vuuno4kse|vuultimo4k|vuzero4k|vuduo4k|vuduo4kse)$"
+
 PR = "r1"
 
 DEPENDS = "libvupl-${MACHINE} libgles-${MACHINE}"
