@@ -3,7 +3,10 @@ SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "CLOSED"
 
-PACKAGES = "vuplus-blindscan-dvbs-utils-${MACHINE} vuplus-blindscan-dvbc-utils-${MACHINE}"
+PACKAGES = "vuplus-blindscan-utils-${MACHINE}-dbg \
+            vuplus-blindscan-dvbs-utils-${MACHINE} \
+            vuplus-blindscan-dvbc-utils-${MACHINE} \
+           "
 
 PROVIDES += "virtual/blindscan-dvbs virtual/blindscan-dvbc"
 RPROVIDES_vuplus-blindscan-dvbs-utils-${MACHINE} += "virtual/blindscan-dvbs"
@@ -71,6 +74,7 @@ do_install_vusolo2() {
 	install -m 0755 "${S}/vuplus_bcm7346_blindscan" "${D}/${bindir}"
 }
 
+
 FILES_vuplus-blindscan-dvbs-utils-${MACHINE} = "\
 	${bindir}/vuplus_blindscan \
 	${bindir}/vuplus_6211_blindscan \
@@ -88,7 +92,7 @@ FILES_vuplus-blindscan-dvbc-utils-${MACHINE} = "\
 	${bindir}/tt2l08_t2_scan \
 	"
 
-INHIBIT_PACKAGE_STRIP = "1"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
-PACKAGE_ARCH := "${MACHINE_ARCH}"
-
+# tda1002x is stripped
+INSANE_SKIP_${PN} = "already-stripped"

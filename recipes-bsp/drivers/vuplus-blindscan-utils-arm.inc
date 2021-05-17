@@ -3,7 +3,10 @@ SECTION = "base"
 PRIORITY = "optional"
 LICENSE = "CLOSED"
 
-PACKAGES = "vuplus-blindscan-dvbs-utils-${MACHINE} vuplus-blindscan-dvbc-utils-${MACHINE}"
+PACKAGES = "vuplus-blindscan-utils-${MACHINE}-dbg \
+            vuplus-blindscan-dvbs-utils-${MACHINE} \
+            vuplus-blindscan-dvbc-utils-${MACHINE} \
+           "
 
 PROVIDES += "virtual/blindscan-dvbs virtual/blindscan-dvbc"
 RPROVIDES_vuplus-blindscan-dvbs-utils-${MACHINE} += "virtual/blindscan-dvbs"
@@ -57,8 +60,4 @@ FILES_vuplus-blindscan-dvbc-utils-${MACHINE} = "\
 	${bindir}/bcm3466 \
 "
 
-INHIBIT_PACKAGE_STRIP = "1"
-
-PACKAGE_ARCH := "${MACHINE_ARCH}"
-
-INSANE_SKIP_${PN} = "already-stripped"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
