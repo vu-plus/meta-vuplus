@@ -1,1 +1,1 @@
-require vuplus-blindscan-utils.inc
+require vuplus-blindscan-utils-mipsel.inc
