@@ -1,4 +1,4 @@
-require xbmc-support.inc
+require vuplus-kodi.inc
 
 COMPATIBLE_MACHINE = "^(vuduo2)$"
 

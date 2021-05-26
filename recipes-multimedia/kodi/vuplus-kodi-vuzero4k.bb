@@ -1,4 +1,4 @@
-require kodiegl.inc
+require vuplus-kodi.inc
 
 COMPATIBLE_MACHINE = "^(vuzero4k)$"
 
