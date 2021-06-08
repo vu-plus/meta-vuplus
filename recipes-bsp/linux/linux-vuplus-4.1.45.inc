@@ -34,6 +34,7 @@ SRC_URI += "http://code.vuplus.com/download/release/kernel/stblinux-${KSRC_VER}.
 	file://0015-staging-media-mn88472-simplify-NULL-tests.patch \
 	file://0016-mn88472-fix-typo.patch \
 	file://0017-mn88472-finalize-driver.patch \
+	file://0018-Add-support-for-dvb-usb-stick-Hauppauge-WinTV-dualHD.patch \
 	file://0001-dvb-usb-fix-a867.patch \
 	file://0001-Support-TBS-USB-drivers-for-4.1-kernel.patch \
 	file://0001-TBS-fixes-for-4.1-kernel.patch \
