@@ -33,7 +33,8 @@ do_install(){
 do_install_mipsarch(){
     install -m 0755 ${S}/xbmc.helper ${D}${bindir}
     install -m 0755 ${S}/libxbmc_base.so ${D}${libdir}
-    install -m 0644 ${S}/gles_init.a ${D}${libdir}/libgles_init.a
+    install -m 0644 ${S}/gles_init.a ${D}${libdir}/gles_init.a
+    ln -sf gles_init.a ${D}${libdir}/libgles_init.a
     install -m 0644 ${S}/gles_init.h ${D}${includedir}
 }
 
