@@ -74,6 +74,7 @@ IMAGE_CMD_ubi_append = " \
 MACHINE_FEATURES += "alsa usbhost wlan 3dtv switchoff osdposition hdmicec fan vuplus-mipsel"
 MACHINE_FEATURES_remove_vuzero = "vuplus-mipsel"
 
+OPENPLI_FEATURES += "kodi"
 require conf/machine/include/tune-mips32.inc
 
 HOSTTOOLS += "sshpass"
