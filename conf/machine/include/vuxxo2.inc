@@ -75,6 +75,8 @@ MACHINE_FEATURES += "alsa usbhost wlan 3dtv switchoff osdposition hdmicec fan vu
 MACHINE_FEATURES_remove_vuzero = "vuplus-mipsel"
 
 OPENPLI_FEATURES += "kodi"
+OPENPLI_FEATURES_remove_vuzero = "kodi"
+
 require conf/machine/include/tune-mips32.inc
 
 HOSTTOOLS += "sshpass"
