@@ -71,7 +71,15 @@ IMAGE_CMD_ubi_append = " \
 	rm -rf vuplus; \
 "
 
-MACHINE_FEATURES += "alsa usbhost wlan 3dtv switchoff osdposition hdmicec fan"
+MACHINE_FEATURES += "alsa usbhost wlan 3dtv switchoff osdposition hdmicec fan vuplus-mipsel"
+MACHINE_FEATURES_remove_vuzero = "vuplus-mipsel"
+
+OPENPLI_FEATURES += "kodi"
+OPENPLI_FEATURES_remove_vuzero = "kodi"
+
+# xbmc/kodi-support
+DEPENDS_append_pn-kodi = " vuplus-kodi-${MACHINE}"
+RDEPENDS_kodi_append = " vuplus-kodi-${MACHINE}"
 
 require conf/machine/include/tune-mips32.inc
 
