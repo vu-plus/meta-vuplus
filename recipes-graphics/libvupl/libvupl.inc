@@ -6,7 +6,7 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 RDEPENDS_${PN} = "libgles-${MACHINE}"
 
 PROVIDES += "libvupl"
-RPROVIDES:${PN} += "libvupl"
+RPROVIDES_${PN} += "libvupl"
 
 PV = "0.1.0"
 PR = "${SRCDATE}.${SRCDATE_PR}"
