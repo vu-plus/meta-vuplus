@@ -1,6 +1,7 @@
 SUMMARY = "WebKit web rendering engine for the GTK+ platform"
 HOMEPAGE = "http://www.webkitgtk.org/"
 BUGTRACKER = "http://bugs.webkit.org/"
+PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 LICENSE = "BSD & LGPLv2+"
 LIC_FILES_CHKSUM = "\
@@ -9,9 +10,9 @@ LIC_FILES_CHKSUM = "\
 	file://Source/JavaScriptCore/parser/Parser.h;endline=23;md5=2f3cff0ad0a9c486da5a376928973a90 \
 	"
 
-DEPENDS = "glib-2.0 glib-2.0-native gettext-native zlib enchant libsoup-2.4 curl libxml2 cairo libidn gnutls \
+DEPENDS = "glib-2.0 glib-2.0-native gettext-native zlib enchant2 libidn2 libsoup-2.4 curl libxml2 cairo gnutls \
            gtk+ gstreamer1.0 gstreamer1.0-plugins-base flex-native bison-native gperf-native sqlite3 \
-           libxslt zlib libpcre harfbuzz pango atk udev"
+           libxslt libpcre harfbuzz pango udev"
 
 PR = "r5"
 PV = "r95199"
@@ -26,7 +27,9 @@ SRC_URI = "git://code.vuplus.com/git/webkit-r95199-base.git;protocol=http;branch
     file://webkit-gtk_fixed_crash_error.patch \
     file://maketokenizer.patch \
     file://fix-build-webcore-config-on-zeus.patch \
-"
+    file://0001-g_thread_init-not-found.patch \
+    file://0001-fix-build-with-bison-3.7.patch \
+    "
 
 inherit autotools lib_package gtk-doc pkgconfig perlnative pythonnative
 
@@ -35,6 +38,7 @@ S = "${WORKDIR}/git"
 EXTRA_OECONF = "\
 	--enable-debug=no \
 	--with-gtk=2.0 \
+	--with-unicode-backend=glib \
 	--disable-spellcheck \
 	--enable-optimizations \
 	--disable-channel-messaging \
@@ -58,13 +62,18 @@ EXTRA_OECONF = "\
 	--enable-offline-web-applications \
 	"
 
-LDFLAGS += "-Wl,--no-keep-memory"
+LDFLAGS += "-Wl,--no-keep-memory -lgthread-2.0 \
+        ${@bb.utils.contains('DISTRO_FEATURES', 'ld-is-gold', ' -fuse-ld=bfd ', '', d)}"
 
-CXXFLAGS += " -std=gnu++98"
+CPPFLAGS += "-I${STAGING_INCDIR}/pango-1.0 \
+            -I${STAGING_LIBDIR}/glib-2.0/include \
+            -I${STAGING_INCDIR}/glib-2.0" 
+
+CXXFLAGS += " -std=gnu++98 -Wno-expansion-to-defined -Wno-deprecated-copy -Wno-class-memaccess -Wno-unused-local-typedefs -Wno-cast-align -Wno-c++11-compat"
 
 OECMAKE_GENERATOR = "Unix Makefiles"
 
-EXTRA_AUTORECONF = " -I Source/autotools "
+EXTRA_AUTORECONF += " -I Source/autotools "
 
 ARM_INSTRUCTION_SET = "arm"
 
