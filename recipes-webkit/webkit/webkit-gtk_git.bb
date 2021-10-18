@@ -27,7 +27,6 @@ SRC_URI = "git://code.vuplus.com/git/webkit-r95199-base.git;protocol=http;branch
     file://webkit-gtk_fixed_crash_error.patch \
     file://maketokenizer.patch \
     file://fix-build-webcore-config-on-zeus.patch \
-    file://0001-g_thread_init-not-found.patch \
     file://0001-fix-build-with-bison-3.7.patch \
     "
 
