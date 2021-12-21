@@ -1,6 +1,6 @@
 DESCRIPTION = "Vuplus bluetooth plugin"
 
-inherit pythonnative
+inherit python3native
 
 LICENSE = "CLOSED"
 

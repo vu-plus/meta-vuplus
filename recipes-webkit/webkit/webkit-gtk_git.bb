@@ -30,7 +30,7 @@ SRC_URI = "git://code.vuplus.com/git/webkit-r95199-base.git;protocol=http;branch
     file://0001-fix-build-with-bison-3.7.patch \
     "
 
-inherit autotools lib_package gtk-doc pkgconfig perlnative pythonnative
+inherit autotools lib_package gtk-doc pkgconfig perlnative python3native
 
 S = "${WORKDIR}/git"
 

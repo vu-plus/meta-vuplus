@@ -8,7 +8,7 @@ DEPENDS = "python-native"
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRCREV = "b0fb2521cedeac8089de73c3b59fd15bda0e99e0"
-inherit gitpkgv pythonnative
+inherit gitpkgv python3native
  
 PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"
