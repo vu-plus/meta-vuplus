@@ -19,7 +19,7 @@ S = "${WORKDIR}/plugin"
 BLUETOOTH_PLUGIN_PATH = "/usr/lib/enigma2/python/Plugins/SystemPlugins/BluetoothSetup"
 
 do_compile() {
-	python -O -m compileall ${S}
+	python3 -O -m compileall ${S}
 }
 
 do_install() {
