@@ -4,7 +4,7 @@ inherit python3native
 
 LICENSE = "CLOSED"
 
-DEPENDS = "python-native"
+DEPENDS = "python3-native"
 RDEPENDS_${PN} = "vuplus-bluetooth-util libusb-compat"
 
 PN = "enigma2-plugin-systemplugins-bluetoothsetup"

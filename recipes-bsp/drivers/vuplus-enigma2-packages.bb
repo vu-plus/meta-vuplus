@@ -3,7 +3,7 @@ DESCRIPTION = "Vuplus Specific plugins"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=c9e255efa454e0155c1fd758df7dcaf3"
 
-DEPENDS = "python-native"
+DEPENDS = "python3-native"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
