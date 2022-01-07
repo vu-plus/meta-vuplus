@@ -1,12 +1,13 @@
 require linux-vuplus-4.1.45.inc
 
-MACHINE_KERNEL_PR_append = "${PR_INC}.3"
+MACHINE_KERNEL_PR_append = "${PR_INC}.4"
 
 KSRC_VER = "4.1-1.17"
 
 SRC_URI += " \
 	file://bcmsysport_4_1_45.patch \
 	file://linux_usb_hub.patch \
+	file://make-yyloc-declaration-extern.patch \
 "
 
 COMPATIBLE_MACHINE = "vuduo4k"
