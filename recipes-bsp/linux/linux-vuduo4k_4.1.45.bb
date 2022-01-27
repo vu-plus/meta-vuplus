@@ -7,7 +7,6 @@ KSRC_VER = "4.1-1.17"
 SRC_URI += " \
 	file://bcmsysport_4_1_45.patch \
 	file://linux_usb_hub.patch \
-	file://make-yyloc-declaration-extern.patch \
 "
 
 COMPATIBLE_MACHINE = "vuduo4k"
