@@ -1,0 +1,376 @@
+diff --git a/OTAUpdate.py b/OTAUpdate.py
+index bb02142..de678ff 100644
+--- a/OTAUpdate.py
++++ b/OTAUpdate.py
+@@ -186,8 +186,8 @@ class VuRcuOtaUpdate(Screen, HelpableScreen, BluetoothTask):
+ 				self.vubt.pluginOtaEventHandler.remove(self.otaEventCallback)
+ 
+ 	def otaEventCallback(self, event, value):
+-		print "[VuRcuOtaUpdate][otaEventCallback] event : ", event
+-		print "[VuRcuOtaUpdate][otaEventCallback] value : ", value
++		print("[VuRcuOtaUpdate][otaEventCallback] event : ", event)
++		print("[VuRcuOtaUpdate][otaEventCallback] value : ", value)
+ 
+ 		if event == OTA_PROGRESS_DATA: # OTA_PROGRESS_DATA
+ 			self["text"].setText(_("Updateing %d %%") % value)
+@@ -217,7 +217,7 @@ class VuRcuOtaUpdate(Screen, HelpableScreen, BluetoothTask):
+ 	def disconnectDevices(self):
+ 		pairedDevices = self.vubt.getPairedDevice()
+ 
+-		print "pairedDevices : ", pairedDevices
++		print("pairedDevices : ", pairedDevices)
+ 
+ 		if pairedDevices:
+ 			for (k, v) in pairedDevices.items():
+@@ -264,8 +264,8 @@ class VuRcuOtaUpdate(Screen, HelpableScreen, BluetoothTask):
+ 				self.vubt.pluginEventHandler.remove(self.eventCallback)
+ 
+ 	def eventCallback(self, event, _data):
+-		print "[VuRcuOtaUpdate][eventCallback] event : %s" % (getEventDesc(event))
+-		print "[VuRcuOtaUpdate][eventCallback] data : ", _data
++		print("[VuRcuOtaUpdate][eventCallback] event : %s" % (getEventDesc(event)))
++		print("[VuRcuOtaUpdate][eventCallback] data : ", _data)
+ 
+ 		data = None
+ 		name = "noname"
+diff --git a/bt.py b/bt.py
+index 50833c3..b83adc9 100755
+--- a/bt.py
++++ b/bt.py
+@@ -88,7 +88,7 @@ class VoiceEventHandler:
+ 			if callback is not None:
+ 				callback(flag)
+ 				return
+-		except Exception, e:
++		except Exception as e:
+ 			pass
+ 
+ 		if flag == "empty":
+@@ -286,11 +286,11 @@ class BTAutoAudioConnect:
+ 		self.requestAudioTimer.stop()
+ 		self.autoAudioMac = bd_addr
+ 		if not self.isAudioDeviceConnected():
+-			print "[BT] auto audio connect start, %s" % self.autoAudioMac
++			print("[BT] auto audio connect start, %s" % self.autoAudioMac)
+ 			self.requestAudioTimer.start(500, True)
+ 
+ 	def doStartAudioConnectCB(self):
+-		print "[BT] request audio connect, %s" % self.autoAudioMac
++		print("[BT] request audio connect, %s" % self.autoAudioMac)
+ 		self.requestAudioTimer.stop()
+ 		if self.autoAudioMac:
+ 			self.requestConnect(self.autoAudioMac)
+@@ -304,7 +304,7 @@ class BTAutoAudioConnect:
+ 			if self.autoAudioRetry > 0:
+ 				self.autoAudioRetry -= 1
+ 				self.requestAudioTimer.stop()
+-				print "[BT] retry audio connect, %s" % self.autoAudioMac
++				print("[BT] retry audio connect, %s" % self.autoAudioMac)
+ 				self.requestAudioTimer.start(500, True)
+ 			else:
+ 				self.autoAudioReset()
+@@ -322,18 +322,18 @@ class BTAutoAudioConnect:
+ 
+ 		self.autoAudioReset()
+ 
+-		print "[BT] update Last Audio Connect, %s" % bd_addr
++		print("[BT] update Last Audio Connect, %s" % bd_addr)
+ 		if config.plugins.bluetoothsetup.lastAudioConn.value != bd_addr:
+ 			config.plugins.bluetoothsetup.lastAudioConn.value = bd_addr
+ 			config.plugins.bluetoothsetup.lastAudioConn.save()
+ 
+ 	def activateBTAudioOut(self, enable):
+ 		if enable and self.btaudioActivated:
+-			print "[BT] already btaudio activated!"
++			print("[BT] already btaudio activated!")
+ 			return
+ 
+ 		if not enable and not self.btaudioActivated:
+-			print "[BT] already btaudio inactivated!"
++			print("[BT] already btaudio inactivated!")
+ 			return
+ 
+ 		self.btaudioActivated = enable
+@@ -348,7 +348,7 @@ class BTAutoAudioConnect:
+ 			fd.write(data)
+ 			fd.close()
+ 		except:
+-			print "[BT] set %s failed!" % BT_AUDIO_ONOFF_PROC
++			print("[BT] set %s failed!" % BT_AUDIO_ONOFF_PROC)
+  
+ 	def setBTAudioDelay(self, updateNow=True):
+ 		global BT_AUDIO_DELAY_PROC
+@@ -370,7 +370,7 @@ class BTAutoAudioConnect:
+ 				fd.write(data)
+ 				fd.close()
+ 			except:
+-				print "[BT] set %s failed!" % BT_AUDIO_DELAY_PROC
++				print("[BT] set %s failed!" % BT_AUDIO_DELAY_PROC)
+ 
+ 	def isAudioDeviceConnected(self):
+ 		return bool(self.getAudioDeviceConnected())
+@@ -467,7 +467,7 @@ class BTOTAProcess:
+ 		self.rcuAppVersion = None
+ 
+ 	def OTAEventCallback(self, evType, value):
+-		print "[OTAEventCallback] evType : %s, value : %s" % (str(evType), str(value))
++		print("[OTAEventCallback] evType : %s, value : %s" % (str(evType), str(value)))
+ 		
+ 		if evType == BTOTAProcess.OTA_COMPLETE:
+ 			self.handleOtaDoneTimer.start(0, True)
+@@ -487,7 +487,7 @@ class BTOTAProcess:
+ 				for handler in self.pluginOtaEventHandler:
+ 					handler(evType, value)
+ 			except Exception as e:
+-				print "[BT] exception error : %s" % str(e)
++				print("[BT] exception error : %s" % str(e))
+ 
+ 	def OTAInit(self):
+ 		self.vubt.OTAInit()
+@@ -578,10 +578,10 @@ class BTHotplugEvent:
+ 	def startEnableTimer(self, _enable):
+ 		from Screens.Standby import inStandby
+ 		if inStandby:
+-			print "[BTHotplugEvent] now in standby, skip BT hotplug event."
++			print("[BTHotplugEvent] now in standby, skip BT hotplug event.")
+ 			return
+ 
+-		print "[BTHotplugEvent] startEnableTimer! ", _enable
++		print("[BTHotplugEvent] startEnableTimer! ", _enable)
+ 
+ 		self.btEnableTimer.stop()
+ 		self.btDisableTimer.stop()
+@@ -592,7 +592,7 @@ class BTHotplugEvent:
+ 			self.btDisableTimer.start(500, True)
+ 
+ 	def enableTimerCB(self):
+-		print "[BTHotplugEvent] Enable"
++		print("[BTHotplugEvent] Enable")
+ 
+ 		if config.plugins.bluetoothsetup.enable.value:
+ 			self.onOffChanged(True)
+@@ -603,7 +603,7 @@ class BTHotplugEvent:
+ 				handler(bt_types.BT_EVENT_BT_CONNECTED, None)
+ 
+ 	def disableTimerCB(self):
+-		print "[BTHotplugEvent] Disable"
++		print("[BTHotplugEvent] Disable")
+ 
+ 		if self.isEnabled():
+ 			if self.isVuBleRcuConnected():
+@@ -669,7 +669,7 @@ class PyBluetoothInterface(VoiceEventHandler, BTVolumeControl, BTAutoAudioConnec
+ 	def setScanTime(self, scanDuration):
+ 		scanDuration = int(scanDuration)
+ 		if (scanDuration <= 0) or (scanDuration > 30):
+-			print "[BT] invalid scanDuration"
++			print("[BT] invalid scanDuration")
+ 			return
+ 
+ 		self.vubt.setScanTime(scanDuration)
+@@ -679,9 +679,9 @@ class PyBluetoothInterface(VoiceEventHandler, BTVolumeControl, BTAutoAudioConnec
+ 			return
+ 
+ 		'''
+-		print "[eventCallback] evType : %s" % str(evType)
+-		print "[eventCallback] data : %s" % str(data)
+-		print "[eventCallback] event : %s" % (getEventDesc(evType))
++		print("[eventCallback] evType : %s" % str(evType))
++		print("[eventCallback] data : %s" % str(data))
++		print("[eventCallback] event : %s" % (getEventDesc(evType)))
+ 		'''
+ 
+ 		bd_addr = data.get("bd_addr", None)
+@@ -730,16 +730,16 @@ class PyBluetoothInterface(VoiceEventHandler, BTVolumeControl, BTAutoAudioConnec
+ 							AddPopup(text = text, type = MessageBox.TYPE_INFO, timeout = 5, id = "bt_event_connected")
+ 
+ 		except Exception as e:
+-			print "[BT] exception error : %s" % str(e)
++			print("[BT] exception error : %s" % str(e))
+ 
+ 	def bleEventCallback(self, evType, data):
+ 		if self.otaMode:
+ 			return
+ 
+ 		'''
+-		print "[bleEventCallback] evType : %s" % str(evType)
+-		print "[bleEventCallback] data : %s" % str(data)
+-		print "[bleEventCallback] event : %s" % (getEventDesc(evType))
++		print("[bleEventCallback] evType : %s" % str(evType))
++		print("[bleEventCallback] data : %s" % str(data))
++		print("[bleEventCallback] event : %s" % (getEventDesc(evType)))
+ 		'''
+ 
+ 		bd_addr = data.get("bd_addr", None)
+@@ -759,7 +759,7 @@ class PyBluetoothInterface(VoiceEventHandler, BTVolumeControl, BTAutoAudioConnec
+ 				pass
+ 			elif evType == bt_types.BT_EVENT_READ_BATTERY_LEVEL:
+ 				if value:
+-					print "[bleEventCallback] get battery level : %d (%s)" % (value, bd_addr)
++					print("[bleEventCallback] get battery level : %d (%s)" % (value, bd_addr))
+ 
+ 					self.batteryLevel = value
+ 					isBatteryLow = (name == bt_types.BT_VUPLUS_RCU_NAME) and (self.batteryLevel < bt_types.BT_BATTERY_LEVEL_LOW)
+@@ -774,7 +774,7 @@ class PyBluetoothInterface(VoiceEventHandler, BTVolumeControl, BTAutoAudioConnec
+ 					handler(evType, data)
+ 
+ 		except Exception as e:
+-			print "[bleEventCallback] exception error : %s" % str(e)
++			print("[bleEventCallback] exception error : %s" % str(e))
+ 
+ 	def onOffChanged(self, value = True):
+ 		if value and (not self.isEnabled()):
+@@ -801,7 +801,7 @@ class PyBluetoothInterface(VoiceEventHandler, BTVolumeControl, BTAutoAudioConnec
+ 
+ 	def updateStatus(self):
+ 		self.status = self.vubt.getStatus()
+-		print "[BT] current status : %s" % str(self.status)
++		print("[BT] current status : %s" % str(self.status))
+ 
+ 		for handler in self.pluginStatusHandler:
+ 			handler(self.status)			
+@@ -860,7 +860,7 @@ class PyBluetoothInterface(VoiceEventHandler, BTVolumeControl, BTAutoAudioConnec
+ 
+ 	def setVoiceCheckDB(self, value):
+ 		int_value = int(value)
+-		print "[setVoiceCheckDB] value : %d" %  int_value
++		print("[setVoiceCheckDB] value : %d" %  int_value)
+ 		self.vubt.setVoiceCheckDB(int_value)
+ 
+ pybluetooth_instance = PyBluetoothInterface()
+diff --git a/bt_scan.py b/bt_scan.py
+index 038f56b..43ea806 100755
+--- a/bt_scan.py
++++ b/bt_scan.py
+@@ -105,8 +105,8 @@ class BluetoothDiscovery(BluetoothTask):
+ 		self.scanningShowValue = (self.scanningShowValue % self.scanningShowMax) + 1
+ 
+ 	def discEventCallback(self, event, _data):
+-		print "[BluetoothDiscovery][discEventCallback] event : %s" % (getEventDesc(event))
+-		print "[BluetoothDiscovery][discEventCallback] data : ", _data
++		print("[BluetoothDiscovery][discEventCallback] event : %s" % (getEventDesc(event)))
++		print("[BluetoothDiscovery][discEventCallback] data : ", _data)
+ 
+ 		data = None
+ 		name = "noname"
+@@ -187,7 +187,7 @@ class BluetoothDiscovery(BluetoothTask):
+ 		(mac, profile, name) = args
+ 		ret = False
+ 		if self.isPairing():
+-			print "[BluetoothDiscovery] cancelPairing %s" % mac
++			print("[BluetoothDiscovery] cancelPairing %s" % mac)
+ 			ret = self.vubt.cancelPairing(mac)
+ 
+ 		return ret
+diff --git a/bt_setup.py b/bt_setup.py
+index f376864..8e2d8a2 100755
+--- a/bt_setup.py
++++ b/bt_setup.py
+@@ -33,8 +33,8 @@ class BluetoothSetup(BluetoothTask):
+ 				self.vubt.pluginEventHandler.remove(self.eventCallback)
+ 
+ 	def eventCallback(self, event, _data):
+-		print "[BluetoothSetup][eventCallback] event : %s" % (getEventDesc(event))
+-		print "[BluetoothSetup][eventCallback] data : ", _data
++		print("[BluetoothSetup][eventCallback] event : %s" % (getEventDesc(event)))
++		print("[BluetoothSetup][eventCallback] data : ", _data)
+ 
+ 		data = None
+ 		name = "noname"
+@@ -349,7 +349,7 @@ class BluetoothSetupScreen(Screen, HelpableScreen, BluetoothSetup):
+ 				deviceEntry = ( name, classOfDevice, status, icon, v)
+ 				self.deviceList.append(deviceEntry)
+ 
+-		print "[showPairedList] self.deviceList : ", self.deviceList
++		print("[showPairedList] self.deviceList : ", self.deviceList)
+ 
+ 		self["deviceList"].setList(self.deviceList)
+ 
+@@ -404,10 +404,10 @@ class BluetoothSetupScreen(Screen, HelpableScreen, BluetoothSetup):
+ 			name = cur_dev['name']
+ 			profile = cur_dev['profile']
+ 
+-		print "[keyGreen] mac : ", mac
+-		print "[keyGreen] name : ", name
+-		print "[keyGreen] profile : ", profile
+-		print "[keyGreen] isConnected : ", isConnected
++		print("[keyGreen] mac : ", mac)
++		print("[keyGreen] name : ", name)
++		print("[keyGreen] profile : ", profile)
++		print("[keyGreen] isConnected : ", isConnected)
+ 
+ 		if mac is None:
+ 			return
+@@ -519,7 +519,7 @@ class BluetoothSetupScreen(Screen, HelpableScreen, BluetoothSetup):
+ 			return
+ 
+ 		if not self.isIdle():
+-			print "[keyVuRcuSetup] current state : %d, wait 500ms." % self.getState()
++			print("[keyVuRcuSetup] current state : %d, wait 500ms." % self.getState())
+ 			self.rcuSetupTimer.start(500, True)
+ 			return
+ 
+diff --git a/bt_task.py b/bt_task.py
+index 0944b3d..6b87e6f 100644
+--- a/bt_task.py
++++ b/bt_task.py
+@@ -89,7 +89,7 @@ class BluetoothTask(BluetoothState):
+ 
+ 	def addTask(self, taskType, callFunc, mac, args, eventCB):
+ 		task = {"taskType" : taskType, "callFunc" : callFunc, "mac": mac, "args" : args, "eventCB" : eventCB}
+-		#print "==> addTask : "
++		#print("==> addTask : ")
+ 		#self.printTask(task)
+ 
+ 		if self.isTaskEmpty():
+@@ -98,7 +98,7 @@ class BluetoothTask(BluetoothState):
+ 			self.tasks.append(task)
+ 
+ 	def doTask(self, task):
+-		#print "==> doTask : "
++		#print("==> doTask : ")
+ 		#self.printTask(task)
+ 
+ 		callFunc = task["callFunc"]
+@@ -133,10 +133,10 @@ class BluetoothTask(BluetoothState):
+ 			self.updateState(taskType)
+ 
+ 	def handleEvent(self, event, name, data):
+-		#print "==> handleEvent event : ", event
+-		#print "==> handleEvent name : ", name
+-		#print "==> handleEvent data : ", data
+-		#print "==> handleEvent self.curTask : "
++		#print("==> handleEvent event : ", event)
++		#print("==> handleEvent name : ", name)
++		#print("==> handleEvent data : ", data)
++		#print("==> handleEvent self.curTask : ")
+ 		#self.printTask(self.curTask)
+ 
+ 		if self.curTask is None:
+@@ -158,10 +158,10 @@ class BluetoothTask(BluetoothState):
+ 				self.doNextTmer.start(self.doNextInterval, True)
+ 
+ 	def doNext(self):
+-		#print "==> doNext self.tasks :"
++		#print("==> doNext self.tasks :")
+ 		#for t in self.tasks:
+ 		#	self.printTask(t)
+-		#print "==> doNext self.curTask :"
++		#print("==> doNext self.curTask :")
+ 		#self.printTask(self.curTask)
+ 
+ 		if self.curTask:
+@@ -206,8 +206,8 @@ class BluetoothTask(BluetoothState):
+ 			self.TASK_EXIT : "TASK_EXIT"
+ 		}
+ 
+-		print "		taskType : ", taskDesc[task["taskType"]]
+-		print "		callFunc : ", task["callFunc"]
+-		print "		mac : ", task["mac"]
+-		print "		args : ", task["args"]
+-		print "		eventCB : ", task["eventCB"]
+\ No newline at end of file
++		print("		taskType : ", taskDesc[task["taskType"]])
++		print("		callFunc : ", task["callFunc"])
++		print("		mac : ", task["mac"])
++		print("		args : ", task["args"])
++		print("		eventCB : ", task["eventCB"])
