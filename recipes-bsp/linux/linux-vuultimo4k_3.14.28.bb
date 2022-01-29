@@ -10,7 +10,6 @@ KSRC_VER = "3.14-1.12"
 SRC_URI += "\
 	file://bcmsysport_3.14.28-1.12.patch \
 	file://linux_prevent_usb_dma_from_bmem.patch \
-	file://make-yyloc-declaration-extern.patch \
 "
 
 COMPATIBLE_MACHINE = "vuultimo4k"
