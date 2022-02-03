@@ -15,7 +15,9 @@ SRC_URI = " \
 "
 
 SRC_URI_append_vuduo4kse = " file://port-to-python3-20200320.patch"
-SRC_URI_append_vuzero4k = " file://port-to-python-20171114.patch"
+SRC_URI_append_vuzero4k = " file://port-to-python3-20171114.patch"
+SRC_URI_append_vuuno4k = " file://port-to-python3-20171114.patch"
+SRC_URI_append_vuuno4kse = " file://port-to-python3-20171114.patch"
 
 S = "${WORKDIR}/plugin"
 
