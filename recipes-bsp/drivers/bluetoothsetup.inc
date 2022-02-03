@@ -12,8 +12,10 @@ PR = "${SRCDATE}.${SRCDATE_PR}"
 
 SRC_URI = " \
     http://code.vuplus.com/download/release/bt/enigma2-plugin-bluetoothsetup-${MACHINE}-${PR}.tar.gz \
-    file://port-to-python3.patch \
 "
+
+SRC_URI_append_vuduo4kse = " file://port-to-python3-20200320.patch"
+SRC_URI_append_vuzero4k = " file://port-to-python-20171114.patch"
 
 S = "${WORKDIR}/plugin"
 
