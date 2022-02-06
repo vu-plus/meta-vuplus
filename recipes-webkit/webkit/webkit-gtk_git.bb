@@ -12,7 +12,7 @@ LIC_FILES_CHKSUM = "\
 
 DEPENDS = "glib-2.0 glib-2.0-native gettext-native zlib enchant2 libidn2 libsoup-2.4 curl libxml2 cairo gnutls \
            gtk+ gstreamer1.0 gstreamer1.0-plugins-base flex-native bison-native gperf-native sqlite3 \
-           libxslt libpcre harfbuzz pango udev"
+           libxslt libpcre harfbuzz pango atk udev"
 
 PR = "r5"
 PV = "r95199"
@@ -66,7 +66,7 @@ LDFLAGS += "-Wl,--no-keep-memory -lgthread-2.0 \
 
 CPPFLAGS += "-I${STAGING_INCDIR}/pango-1.0 \
             -I${STAGING_LIBDIR}/glib-2.0/include \
-            -I${STAGING_INCDIR}/glib-2.0" 
+            -I${STAGING_INCDIR}/glib-2.0"
 
 CXXFLAGS += " -std=gnu++98 -Wno-expansion-to-defined -Wno-deprecated-copy -Wno-class-memaccess -Wno-unused-local-typedefs -Wno-cast-align -Wno-c++11-compat"
 
@@ -103,4 +103,3 @@ FILES_${PN}-webinspector = "${datadir}/webkitgtk-*/webinspector/"
 FILES_${PN} += "${datadir}/webkitgtk-*/resources/error.html \
                 ${datadir}/webkitgtk-*/images \
                 ${datadir}/glib-2.0/schemas"
-
