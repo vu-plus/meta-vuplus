@@ -2,9 +2,8 @@ require bluetoothsetup.inc
 
 COMPATIBLE_MACHINE = "^(vuzero4k)$"
 
-SRCDATE = "20171114"
+SRCDATE = "20200812"
 SRCDATE_PR = "r0"
 
-SRC_URI[md5sum] = "462f37c6852b57d88a81b0cb1497acd5"
-SRC_URI[sha256sum] = "f924e70ea45fbdd006523fd3bf5cdae50894039d9c1d95ecac8a5591d32ef6ad"
-
+SRC_URI[py3.md5sum] = "e94e91d562f4da88a3ab535cb7f982de"
+SRC_URI[py3.sha256sum] = "e138db70b21a9d73672cae0a91fca397112c1159ea6c0f488d2d51699c17a4e9"

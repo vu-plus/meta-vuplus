@@ -5,5 +5,5 @@ COMPATIBLE_MACHINE = "^(vuduo4kse)$"
 SRCDATE = "20200320"
 SRCDATE_PR = "r0"
 
-SRC_URI[md5sum] = "ee90c784d3a0b050e66ee81624fcb631"
-SRC_URI[sha256sum] = "e079638b1ff6d5d1cbea86ec336eb85ff2e33e1cacd6e1acac97520b8568ecd7"
+SRC_URI[md5sum] = "e94e91d562f4da88a3ab535cb7f982de"
+SRC_URI[sha256sum] = "e138db70b21a9d73672cae0a91fca397112c1159ea6c0f488d2d51699c17a4e9"

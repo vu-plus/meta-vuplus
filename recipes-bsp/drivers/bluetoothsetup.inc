@@ -8,11 +8,10 @@ DEPENDS = "python3-native"
 RDEPENDS_${PN} = "vuplus-bluetooth-util libusb-compat"
 
 PN = "enigma2-plugin-systemplugins-bluetoothsetup"
-PR = "${SRCDATE}.${SRCDATE_PR}"
+PR = "${SRCDATE}-py3.${SRCDATE_PR}"
 
 SRC_URI = " \
     http://code.vuplus.com/download/release/bt/enigma2-plugin-bluetoothsetup-${MACHINE}-${PR}.tar.gz \
-    file://port-to-python3-${SRCDATE}.patch \
 "
 
 S = "${WORKDIR}/plugin"
