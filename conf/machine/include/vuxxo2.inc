@@ -16,7 +16,6 @@ MACHINE_EXTRA_RRECOMMENDS = " \
 
 MACHINE_EXTRA_RDEPENDS += "\
 	kernel-module-sr-mod \
-	${@bb.utils.contains("MACHINE_FEATURES", "opera-browser", "enigma2-plugin-extensions-hbbtv", "", d)} \
 "
 
 EXTRA_IMAGEDEPENDS += "\
