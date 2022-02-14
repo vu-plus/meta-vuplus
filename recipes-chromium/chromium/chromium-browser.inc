@@ -11,7 +11,7 @@ SRC_URI = "http://code.vuplus.com/download/chromium/chromium-vuplus_${MACHINE}_$
 #PREFERRED_VERSION_nss = "3.17.3"
 
 #DEPENDS = "nss libxslt"
-RDEPENDS_${PN} = "nspr nss libxslt"
+RDEPENDS_${PN} = "libcrypto-compat nspr nss libxslt libudev libcurl"
 
 do_install() {
 	install -d ${D}/usr/local/chromium
