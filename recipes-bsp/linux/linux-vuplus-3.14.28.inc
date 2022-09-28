@@ -29,6 +29,7 @@ SRC_URI += "http://code.vuplus.com/download/release/kernel/stblinux-${KSRC_VER}.
 	file://kernel-gcc8.patch \
 	file://0003-mips-kernel-ilog2-gcc7.patch \
 	file://0003-3.x-uaccess-dont-mark-register-as-const.patch \
+	file://0004-make-yyloc-declaration-extern.patch \
 	file://kernel-add-support-for-gcc9.patch \
 	file://0006-makefile-disable-warnings.patch \
 	file://${MACHINE}_defconfig \

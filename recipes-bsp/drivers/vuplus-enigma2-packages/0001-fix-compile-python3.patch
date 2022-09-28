@@ -1,0 +1,957 @@
+From 9f43068bd1632be234e345bfdb222d1a3808d41f Mon Sep 17 00:00:00 2001
+From: Boris <boris.fox.solovyev@gmail.com>
+Date: Fri, 7 Jan 2022 10:11:58 +0200
+Subject: [PATCH] fix compile python3
+
+---
+ lib/python/Plugins/SystemPlugins/FPGAUpgrade/plugin.py           | 103 ++++++++++++++++++++++++++++++++++++++++++++++++++++---------------------------------------------------
+ lib/python/Plugins/SystemPlugins/FirmwareUpgrade/plugin.py       | 145 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++------------------------------------------------------------------------
+ lib/python/Plugins/SystemPlugins/LEDBrightnessSetup/plugin.py    |   1 +
+ lib/python/Plugins/SystemPlugins/ManualFancontrol/InstandbyOn.py |  39 ++++++++++++++++++++-------------------
+ lib/python/Plugins/SystemPlugins/ManualFancontrol/plugin.py      |  17 +++++++++--------
+ lib/python/Plugins/SystemPlugins/RemoteControlCode/plugin.py     |   5 +++--
+ lib/python/Plugins/newplugin.py                                  |  17 +++++++++--------
+ 7 files changed, 167 insertions(+), 160 deletions(-)
+
+diff --git a/lib/python/Plugins/SystemPlugins/FPGAUpgrade/plugin.py b/lib/python/Plugins/SystemPlugins/FPGAUpgrade/plugin.py
+index 5fd7a7e5..495161bb 100644
+--- a/lib/python/Plugins/SystemPlugins/FPGAUpgrade/plugin.py
++++ b/lib/python/Plugins/SystemPlugins/FPGAUpgrade/plugin.py
+@@ -1,3 +1,4 @@
++from __future__ import print_function
+ import os, fcntl, thread
+ 
+ from enigma import eTimer, getDesktop
+@@ -32,7 +33,7 @@ class FPGAUpgradeCore() :
+ 	callcount 	= 0
+ 	MAX_CALL_COUNT 	= 1500
+ 	def __init__(self, firmwarefile, devicefile):
+-		print '[FPGAUpgrade]'
++		print('[FPGAUpgrade]')
+ 		self.devicefile = devicefile
+ 		self.firmwarefile = firmwarefile
+ 
+@@ -43,36 +44,36 @@ class FPGAUpgradeCore() :
+ 			if fp is not None: fp.close()
+ 		try:
+ 			size = os.path.getsize(self.firmwarefile)
+-			if size == 0: raise Exception, 'data_size is zero'
+-			#print '[FPGAUpgradeCore] data_size :',size
++			if size == 0: raise Exception('data_size is zero')
++			#print('[FPGAUpgradeCore] data_size :',size)
+ 
+ 			firmware = open(self.firmwarefile, 'rb')
+ 			device = os.open(self.devicefile, os.O_RDWR)
+-			#print '[FPGAUpgradeCore] open >> [ok]'
++			#print('[FPGAUpgradeCore] open >> [ok]')
+ 
+ 			rc = fcntl.ioctl(device, 0, size)
+-			if rc < 0: raise Exception, 'fail to set size : %d'%(rc)
+-			#print '[FPGAUpgradeCore] set size >> [ok]'
++			if rc < 0: raise Exception('fail to set size : %d'%(rc))
++			#print('[FPGAUpgradeCore] set size >> [ok]')
+ 
+ 			rc = fcntl.ioctl(device, 2, 5)
+-			if rc < 0: raise Exception, 'fail to set programming mode : %d'%(rc)
+-			#print '[FPGAUpgradeCore] programming mode >> [ok]'
++			if rc < 0: raise Exception('fail to set programming mode : %d'%(rc))
++			#print('[FPGAUpgradeCore] programming mode >> [ok]')
+ 			self.status = STATUS_PREPARED
+ 
+ 			while True:
+ 				data = firmware.read(1024)
+ 				if data == '': break
+ 				os.write(device, data)
+-			#print '[FPGAUpgradeCore] write data >> [ok]'
++			#print('[FPGAUpgradeCore] write data >> [ok]')
+ 
+ 			self.status = STATUS_PROGRAMMING
+ 			rc = fcntl.ioctl(device, 1, 0)
+-			if rc < 0: raise Exception, 'fail to programming : %d'%(rc)
+-			#print '[FPGAUpgradeCore] upgrade done.'
+-			if self.callcount < 100: raise Exception, 'wrong fpga file.'
+-		except Exception, msg:
++			if rc < 0: raise Exception('fail to programming : %d'%(rc))
++			#print('[FPGAUpgradeCore] upgrade done.')
++			if self.callcount < 100: raise Exception('wrong fpga file.')
++		except Exception as msg:
+ 			self.errmsg = msg
+-			print '[FPGAUpgradeCore] ERROR >>',msg
++			print('[FPGAUpgradeCore] ERROR >>',msg)
+ 			closefpga(firmware, device)
+ 			return STATUS_ERROR
+ 		closefpga(firmware, device)
+@@ -82,10 +83,10 @@ class FPGAUpgradeCore() :
+ 		self.status = STATUS_READY
+ 		self.status = self.doUpgrade()
+ 		if self.status == STATUS_DONE:
+-			print '[FPGAUpgrade] upgrade done.'
++			print('[FPGAUpgrade] upgrade done.')
+ 		elif self.status == STATUS_ERROR:
+-			print '[FPGAUpgrade] occur error.'
+-		else:	print '[FPGAUpgrade] occur unknown error.'
++			print('[FPGAUpgrade] occur error.')
++		else:	print('[FPGAUpgrade] occur unknown error.')
+ 
+ class FPGAUpgradeManager:
+ 	fu = None
+@@ -113,7 +114,7 @@ class FPGAUpgradeManager:
+ 			self.fu.callcount += 1
+ 			ret = (self.fu.callcount * 100) / self.fu.MAX_CALL_COUNT + 2
+ 			if ret >= 100: ret = 99
+-			#print "callcount : [%d]"%(self.fu.callcount);
++			#print("callcount : [%d]"%(self.fu.callcount);)
+ 			return ret
+ 		elif self.fu.status == STATUS_DONE:
+ 			return 100
+@@ -171,7 +172,7 @@ class UpgradeStatus(Screen):
+ 			self.slider.setValue(self.status)
+ 
+ 		if self.status == 100:
+-			#print "fpga-upgrade done!!"
++			#print("fpga-upgrade done!!")
+ 			self.status_bar.setText(_("Succeed"))
+ 			#self.status_bar.setText(_("%d / 100" % (self.status)))
+ 			self.timer_check_progress.stop()
+@@ -181,7 +182,7 @@ class UpgradeStatus(Screen):
+ 			self.timer_exit.start(1000)
+ 
+ 		elif self.status < 0:#elif self.status == -1 or self.status == -2:
+-			#print "fpga-upgrade error >> errno : [%d]" % (self.status)
++			#print("fpga-upgrade error >> errno : [%d]" % (self.status))
+ 			ERROR_MSG = ''
+ 			ERROR_CODE = int(self.status) * -1
+ 			ERROR_MSG = self.parent.FPGA.get_error_msg(ERROR_CODE, ERROR_MSG)
+@@ -191,7 +192,7 @@ class UpgradeStatus(Screen):
+ 			self.is_done = 1
+ 
+ 		else:
+-			#print "fpga-upgrade status : %d" % self.status
++			#print("fpga-upgrade status : %d" % self.status)
+ 			self.status_bar.setText(_("%d / 100" % (self.status)))
+ 
+ 	def callbackExit(self):
+@@ -223,12 +224,12 @@ class FPGAUpgrade(Screen):
+ 
+ 			<widget source="status" render="Label" position="15,60" zPosition="1" size="540,40" font="Regular;18" halign="left" valign="center" transparent="1" />
+ 			<widget name="file_list" position="0,100" size="555,320" scrollbarMode="showOnDemand" />
+-                </screen>
++		</screen>
+ 		"""
+ 
+ 	def __init__(self, session): 
+ 		Screen.__init__(self, session)
+-                self.session = session 
++		self.session = session 
+ 
+ 		self["key_red"] = StaticText(_("Close"))
+ 		self["key_green"] = StaticText(_("Upgrade"))
+@@ -239,7 +240,7 @@ class FPGAUpgrade(Screen):
+ 
+ 		self["actions"] = ActionMap(["OkCancelActions", "ShortcutActions", "WizardActions", "ColorActions", ],
+                 {
+-                        "red": self.onClickRed,
++			"red": self.onClickRed,
+ 			"green": self.onClickGreen,
+ 			"blue": self.onClickBlue,
+ 			"back": self.onClickRed,
+@@ -250,12 +251,12 @@ class FPGAUpgrade(Screen):
+ 			"right": self.onClickRight,
+                 }, -1) 
+ 		self.onLayoutFinish.append(self.doLayoutFinish)
+-	
+-                self.ERROR_MSG = ''                                                                                          
+-                self.ERROR_CODE = 0                                                                                          
+-                self.SOURCELIST = self["file_list"]                                                                          
+-                self.STATUS_BAR = self["status"]                                                                             
+-                self.STATUS_BAR.setText(_(self.SOURCELIST.getCurrentDirectory()))
++
++		self.ERROR_MSG = ''                                                                                          
++		self.ERROR_CODE = 0                                                                                          
++		self.SOURCELIST = self["file_list"]                                                                          
++		self.STATUS_BAR = self["status"]                                                                             
++		self.STATUS_BAR.setText(_(self.SOURCELIST.getCurrentDirectory()))
+ 
+ 		self.DEVICE_LIST = '/dev/fpga_dp;/dev/misc/dp;'
+ 		self.DOWNLOAD_TAR_PATH = '/tmp/'                                                                             
+@@ -263,10 +264,10 @@ class FPGAUpgrade(Screen):
+ 		self.DOWNLOAD_URL = ''
+ 		self.doLoadConf()
+ 		self.FPGA = FPGAUpgradeManager()
+-		print self.DEVICE_LIST
+-		print self.DOWNLOAD_TAR_PATH
+-		print self.DOWNLOAD_FILE_NAME
+-		print self.DOWNLOAD_URL
++		print(self.DEVICE_LIST)
++		print(self.DOWNLOAD_TAR_PATH)
++		print(self.DOWNLOAD_FILE_NAME)
++		print(self.DOWNLOAD_URL)
+ 
+ 	def doLayoutFinish(self):
+ 		return	
+@@ -278,7 +279,7 @@ class FPGAUpgrade(Screen):
+ 
+ 	def doLoadConf(self):
+ 		if fileExists("/proc/stb/info/vumodel"):
+-                        model = open("/proc/stb/info/vumodel").read().strip()
++			model = open("/proc/stb/info/vumodel").read().strip()
+ 			download_uri_header = open('/usr/lib/enigma2/python/Plugins/SystemPlugins/FPGAUpgrade/fpga.conf').readline().strip()
+ 			self.DOWNLOAD_URL = str(download_uri_header) + "vu" + str(model) + "/" + self.DOWNLOAD_FILE_NAME
+ 
+@@ -288,14 +289,14 @@ class FPGAUpgrade(Screen):
+ 		else :
+ 			self.STATUS_BAR.setText(_("Downloading..."))
+ 		
+-	def onCallbackHandler(self, confirmed):                                                                                                                
+-		if confirmed:                                                                                                                    
+-			self.doExit()	
++	def onCallbackHandler(self, confirmed):
++		if confirmed:
++			self.doExit()
+ 
+ 	def doUpgradeHandler(self, confirmed):
+ 		if confirmed == False:
+ 			return
+-		
++
+ 		path = ''
+ 		try:
+ 			path = self.SOURCELIST.getCurrentDirectory() + self.SOURCELIST.getFilename() 
+@@ -314,16 +315,16 @@ class FPGAUpgrade(Screen):
+ 		if device == None or len(device) == 0:
+ 			message = "Fail to upgrade.\nCause : Can't found device.\nDo you want to exit?"
+ 			self.session.openWithCallback(self.onCallbackHandler, MessageBox, _(message), MessageBox.TYPE_YESNO, timeout = 10, default = True)
+-			print "DEVICE_LIST : ", device_list
++			print("DEVICE_LIST : ", device_list)
+ 
+-		print "DEVICE : ", device
++		print("DEVICE : ", device)
+ 		self.ERROR_CODE = self.FPGA.fpga_upgrade(path, device)
+ 		if self.ERROR_CODE > 0:
+ 			self.ERROR_MSG = self.FPGA.get_error_msg(self.ERROR_CODE, self.ERROR_MSG)
+ 			message = "Fail to upgrade.\nCause : " + self.ERROR_MSG + "\nDo you want to exit?"
+ 			self.session.openWithCallback(self.onCallbackHandler, MessageBox, _(message), MessageBox.TYPE_YESNO, timeout = 10, default = True)
+-			print "DEVICE : ", device
+-			print "FILE : ", path
++			print("DEVICE : ", device)
++			print("FILE : ", path)
+ 		else:
+ 			#self.session.open(MessageBox, _("Success!!"), MessageBox.TYPE_INFO, timeout = 5)
+ 			self.session.open(UpgradeStatus, self, timeout = 20)			
+@@ -349,7 +350,7 @@ class FPGAUpgrade(Screen):
+ 			return
+ 		try :
+ 			fname, header = urlretrieve(self.DOWNLOAD_URL, self.DOWNLOAD_TAR_PATH + self.DOWNLOAD_FILE_NAME, self.doHook)
+-		except IOError, msg:
++		except IOError as msg:
+ 			self.session.open(MessageBox, _(str(msg)), MessageBox.TYPE_INFO, timeout = 5)
+ 			del test_opener
+ 			return
+@@ -365,12 +366,12 @@ class FPGAUpgrade(Screen):
+ 			before_name = self.SOURCELIST.getFilename()
+ 
+ 	def onClickOk(self):
+-	        if self.SOURCELIST.canDescent() : # isDir                                                                   
+-	        	self.SOURCELIST.descent()                                                                              
++		if self.SOURCELIST.canDescent(): # isDir
++			self.SOURCELIST.descent()
+ 			if self.SOURCELIST.getCurrentDirectory():
+ 				self.STATUS_BAR.setText(_(self.SOURCELIST.getCurrentDirectory()))
+-        	else:                                                                                                      
+-			self.onClickGreen()
++			else:
++				self.onClickGreen()
+ 
+ 	def onClickUp(self):
+ 		self.SOURCELIST.up()
+@@ -389,8 +390,8 @@ class FPGAUpgrade(Screen):
+ 		self.STATUS_BAR.setText(_(self.SOURCELIST.getCurrentDirectory()))
+ 
+ def main(session, **kwargs):
+-        session.open(FPGAUpgrade)
+-                                                           
+-def Plugins(**kwargs):            
++		session.open(FPGAUpgrade)
++
++def Plugins(**kwargs):
+ 	return PluginDescriptor(name=_("FPGA Upgrade"), description="Upgrade FPGA..", where = PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
+ 
+diff --git a/lib/python/Plugins/SystemPlugins/FirmwareUpgrade/plugin.py b/lib/python/Plugins/SystemPlugins/FirmwareUpgrade/plugin.py
+index 21c4661c..7806da54 100644
+--- a/lib/python/Plugins/SystemPlugins/FirmwareUpgrade/plugin.py
++++ b/lib/python/Plugins/SystemPlugins/FirmwareUpgrade/plugin.py
+@@ -1,3 +1,4 @@
++from __future__ import print_function
+ import os, urllib
+ from urllib import urlretrieve
+ 
+@@ -104,8 +105,8 @@ class FPUpgradeCore() :
+ 			if fp is not None: fp.close()
+ 		try:
+ 			size = os.path.getsize(self.firmwarefile)
+-			if size == 0: raise Exception, 'data_size is zero'
+-			#print '[FPUpgradeCore] data_size :',size
++			if size == 0: raise Exception('data_size is zero')
++			#print('[FPUpgradeCore] data_size :',size)
+ 
+ 			for xx in range(3):
+ 				self.callcount = 0
+@@ -113,31 +114,31 @@ class FPUpgradeCore() :
+ 
+ 				firmware = open(self.firmwarefile, 'rb')
+ 				device = os.open(self.devicefile, os.O_RDWR)
+-				#print '[FPUpgradeCore] open >> [ok]'
++				#print('[FPUpgradeCore] open >> [ok]')
+ 
+ 				rc = fcntl.ioctl(device, 0, size)
+-				if rc < 0: raise Exception, 'fail to set size : %d'%(rc)
+-				#print '[FPUpgradeCore] set size >> [ok]'
++				if rc < 0: raise Exception('fail to set size : %d'%(rc))
++				#print('[FPUpgradeCore] set size >> [ok]')
+ 				self.status = STATUS_PREPARED
+ 
+ 				while True:
+ 					data = firmware.read(1024)
+ 					if data == '': break
+ 					os.write(device, data)
+-				#print '[FPUpgradeCore] write data >> [ok]'
++				#print('[FPUpgradeCore] write data >> [ok]')
+ 
+ 				self.status = STATUS_PROGRAMMING
+ 				rc = fcntl.ioctl(device, 1, 0)
+ 				if rc == 0: break
+-				if xx == 2: raise Exception, 'fail to upgrade : %d'%(rc)
++				if xx == 2: raise Exception('fail to upgrade : %d'%(rc))
+ 				self.errmsg = 'fail to upgrade, retry..'
+ 				self.status = STATUS_RETRY_UPGRADE
+ 				closefp(firmware, device)
+-			#print '[FPUpgradeCore] upgrade done.'
+-			if self.callcount < 20: raise Exception, 'wrong fpga file.'
+-		except Exception, msg:
++			#print('[FPUpgradeCore] upgrade done.')
++			if self.callcount < 20: raise Exception('wrong fpga file.')
++		except Exception as msg:
+ 			self.errmsg = msg
+-			print '[FPUpgradeCore] ERROR >>',msg
++			print('[FPUpgradeCore] ERROR >>',msg)
+ 			closefp(firmware, device)
+ 			return STATUS_ERROR
+ 		return STATUS_DONE
+@@ -146,10 +147,10 @@ class FPUpgradeCore() :
+ 		self.status = STATUS_READY
+ 		self.status = self.doUpgrade()
+ 		if self.status == STATUS_DONE:
+-			print 'upgrade done.'
++			print('upgrade done.')
+ 		elif self.status == STATUS_ERROR:
+-			print 'error!!'
+-		else:	print 'unknown.'
++			print('error!!')
++		else:	print('unknown.')
+ 
+ class FPGAUpgradeCore() :
+ 	status = STATUS_READY
+@@ -157,7 +158,7 @@ class FPGAUpgradeCore() :
+ 	callcount 	= 0
+ 	MAX_CALL_COUNT 	= 1500
+ 	def __init__(self, firmwarefile, devicefile):
+-		print '[FPGAUpgrade]'
++		print('[FPGAUpgrade]')
+ 		self.devicefile = devicefile
+ 		self.firmwarefile = firmwarefile
+ 
+@@ -168,36 +169,36 @@ class FPGAUpgradeCore() :
+ 			if fp is not None: fp.close()
+ 		try:
+ 			size = os.path.getsize(self.firmwarefile)
+-			if size == 0: raise Exception, 'data_size is zero'
+-			#print '[FPGAUpgradeCore] data_size :',size
++			if size == 0: raise Exception('data_size is zero')
++			#print('[FPGAUpgradeCore] data_size :',size)
+ 
+ 			firmware = open(self.firmwarefile, 'rb')
+ 			device = os.open(self.devicefile, os.O_RDWR)
+-			#print '[FPGAUpgradeCore] open >> [ok]'
++			#print('[FPGAUpgradeCore] open >> [ok]')
+ 
+ 			rc = fcntl.ioctl(device, 0, size)
+-			if rc < 0: raise Exception, 'fail to set size : %d'%(rc)
+-			#print '[FPGAUpgradeCore] set size >> [ok]'
++			if rc < 0: raise Exception('fail to set size : %d'%(rc))
++			#print('[FPGAUpgradeCore] set size >> [ok]')
+ 
+ 			rc = fcntl.ioctl(device, 2, 5)
+-			if rc < 0: raise Exception, 'fail to set programming mode : %d'%(rc)
+-			#print '[FPGAUpgradeCore] programming mode >> [ok]'
++			if rc < 0: raise Exception('fail to set programming mode : %d'%(rc))
++			#print('[FPGAUpgradeCore] programming mode >> [ok]')
+ 			self.status = STATUS_PREPARED
+ 
+ 			while True:
+ 				data = firmware.read(1024)
+ 				if data == '': break
+ 				os.write(device, data)
+-			#print '[FPGAUpgradeCore] write data >> [ok]'
++			#print('[FPGAUpgradeCore] write data >> [ok]')
+ 
+ 			self.status = STATUS_PROGRAMMING
+ 			rc = fcntl.ioctl(device, 1, 0)
+-			if rc < 0: raise Exception, 'fail to programming : %d'%(rc)
+-			#print '[FPGAUpgradeCore] upgrade done.'
+-			if self.callcount < 20: raise Exception, 'wrong fpga file.'
+-		except Exception, msg:
++			if rc < 0: raise Exception('fail to programming : %d'%(rc))
++			#print('[FPGAUpgradeCore] upgrade done.')
++			if self.callcount < 20: raise Exception('wrong fpga file.')
++		except Exception as msg:
+ 			self.errmsg = msg
+-			print '[FPGAUpgradeCore] ERROR >>',msg
++			print('[FPGAUpgradeCore] ERROR >>',msg)
+ 			closefpga(firmware, device)
+ 			return STATUS_ERROR
+ 		closefpga(firmware, device)
+@@ -207,10 +208,10 @@ class FPGAUpgradeCore() :
+ 		self.status = STATUS_READY
+ 		self.status = self.doUpgrade()
+ 		if self.status == STATUS_DONE:
+-			print '[FPGAUpgrade] upgrade done.'
++			print('[FPGAUpgrade] upgrade done.')
+ 		elif self.status == STATUS_ERROR:
+-			print '[FPGAUpgrade] occur error.'
+-		else:	print '[FPGAUpgrade] occur unknown error.'
++			print('[FPGAUpgrade] occur error.')
++		else:	print('[FPGAUpgrade] occur unknown error.')
+ 
+ 
+ class VFDCtrlUpgradeCore() :
+@@ -218,20 +219,20 @@ class VFDCtrlUpgradeCore() :
+ 	errmsg = ''
+ 	MAX_CALL_COUNT = 120
+ 	def __init__(self, firmwarefile, devicefile):
+-		#print '[VFDCtrlUpgradeCore]'
++		#print('[VFDCtrlUpgradeCore]')
+ 		self.devicefile = devicefile
+ 		self.firmwarefile = firmwarefile
+-		#print '[VFDCtrlUpgradeCore] devicefile :', self.devicefile
+-		#print '[VFDCtrlUpgradeCore] firmwarefile :', self.firmwarefile
++		#print('[VFDCtrlUpgradeCore] devicefile :', self.devicefile)
++		#print('[VFDCtrlUpgradeCore] firmwarefile :', self.firmwarefile)
+ 
+ 	def doUpgrade(self):
+ 		firmware,device,firmwarename = None,None,None
+-		print '[VFDCtrlUpgradeCore] checkvfd..'
++		print('[VFDCtrlUpgradeCore] checkvfd..')
+ 		cmd_t = "/usr/lib/enigma2/python/Plugins/SystemPlugins/FirmwareUpgrade/checkvfd %s" 
+ 		ret_d = os.popen(cmd_t % (self.firmwarefile)).read()
+ 
+ 		if ret_d is not None and len(ret_d) > 0:
+-			print '[VFDCtrlUpgradeCore] fail to checkvfd.. [' + ret_d + ']'
++			print('[VFDCtrlUpgradeCore] fail to checkvfd.. [' + ret_d + ']')
+ 			return STATUS_ERROR
+ 
+ 		def closevfd(fp, fd, filename):
+@@ -241,8 +242,8 @@ class VFDCtrlUpgradeCore() :
+ 		try:
+ 			max_size = 1024 * 16
+ 			size = max_size #os.path.getsize(self.firmwarefile)
+-			if size == 0: raise Exception, 'data_size is zero'
+-			#print '[VFDCtrlUpgradeCore] data_size :',size
++			if size == 0: raise Exception('data_size is zero')
++			#print('[VFDCtrlUpgradeCore] data_size :',size)
+ 
+ 			for xx in range(3):
+ 				self.callcount = 0
+@@ -250,11 +251,11 @@ class VFDCtrlUpgradeCore() :
+ 				firmwarename = os.path.splitext(self.firmwarefile)[0]
+ 				firmware = open(firmwarename, 'rb')
+ 				device = os.open(self.devicefile, os.O_RDWR)
+-				#print '[VFDCtrlUpgradeCore] open >> [ok]'
++				#print('[VFDCtrlUpgradeCore] open >> [ok]')
+ 
+ 				rc = fcntl.ioctl(device, 0, size)
+-				if rc < 0: raise Exception, 'fail to set size : %d'%(rc)
+-				#print '[VFDCtrlUpgradeCore] set size >> [ok]'
++				if rc < 0: raise Exception('fail to set size : %d'%(rc))
++				#print('[VFDCtrlUpgradeCore] set size >> [ok]')
+ 				self.status = STATUS_PREPARED
+ 
+ 				total_write_size = 0
+@@ -264,19 +265,19 @@ class VFDCtrlUpgradeCore() :
+ 						break
+ 					os.write(device, data)
+ 					total_write_size = total_write_size + 1024
+-				#print '[VFDCtrlUpgradeCore] write data >> [ok]'
++				#print('[VFDCtrlUpgradeCore] write data >> [ok]')
+ 
+ 				self.status = STATUS_PROGRAMMING
+ 				rc = fcntl.ioctl(device, 1, 0)
+ 				if rc == 0: break
+-				if rc < 0 or xx == 2: raise Exception, 'fail to upgrade : %d'%(rc)
++				if rc < 0 or xx == 2: raise Exception('fail to upgrade : %d'%(rc))
+ 				self.errmsg = 'fail to upgrade, retry..'
+ 				self.status = STATUS_RETRY_UPGRADE
+-			#print '[VFDCtrlUpgradeCore] upgrade done.'
+-			if self.callcount < 20: raise Exception, 'wrong fpga file.'
+-		except Exception, msg:
++			#print('[VFDCtrlUpgradeCore] upgrade done.')
++			if self.callcount < 20: raise Exception('wrong fpga file.')
++		except Exception as msg:
+ 			self.errmsg = msg
+-			print '[VFDCtrlUpgradeCore] ERROR >>',msg
++			print('[VFDCtrlUpgradeCore] ERROR >>',msg)
+ 			closevfd(firmware, device, firmwarename)
+ 			return STATUS_ERROR
+ 		closevfd(firmware, device, firmwarename)
+@@ -286,10 +287,11 @@ class VFDCtrlUpgradeCore() :
+ 		self.status = STATUS_READY
+ 		self.status = self.doUpgrade()
+ 		if self.status == STATUS_DONE:
+-			print '[VFDCtrlUpgradeCore] upgrade done.'
++			print('[VFDCtrlUpgradeCore] upgrade done.')
+ 		elif self.status == STATUS_ERROR:
+-			print '[VFDCtrlUpgradeCore] error.'
+-		else:	print '[VFDCtrlUpgradeCore] unknown error.'
++			print('[VFDCtrlUpgradeCore] error.')
++		else:
++			print('[VFDCtrlUpgradeCore] unknown error.')
+ 
+ class FirmwareUpgradeManager:
+ 	fu = None
+@@ -320,7 +322,7 @@ class FirmwareUpgradeManager:
+ 			self.fu.callcount += 1
+ 			ret = (self.fu.callcount * 100) / self.fu.MAX_CALL_COUNT + 2
+ 			if ret >= 100: ret = 99
+-			#print "callcount : [%d]"%(self.fu.callcount);
++			#print("callcount : [%d]"%(self.fu.callcount);)
+ 			return ret
+ 		elif self.fu.status == STATUS_DONE:
+ 			return 100
+@@ -349,7 +351,7 @@ class UpgradeStatus(Screen):
+ 
+ 		self.firmware = firmware
+ 		self.datafile = datafile
+-		#print "[FirmwareUpgrade] - [%s][%s][%s]" % (self.datafile, firmware, device)
++		#print("[FirmwareUpgrade] - [%s][%s][%s]" % (self.datafile, firmware, device))
+ 
+ 		self["name"] = Label(_(" "))
+ 		self["info"] = StaticText(_("Can't cancel during upgrade!!"))
+@@ -381,7 +383,7 @@ class UpgradeStatus(Screen):
+ 		if errno:
+ 			self.check_status.stop()
+ 			errmsg = self.FU.getErrorMessage(errno, errmsg)
+-			print "[FirmwareUpgrade] - ERROR : [%d][%s]" % (errno, errmsg)
++			print("[FirmwareUpgrade] - ERROR : [%d][%s]" % (errno, errmsg))
+ 			self.session.open(MessageBox, _(errmsg), MessageBox.TYPE_INFO, timeout = 10)
+ 			self.cbConfirmExit(False)
+ 			return
+@@ -432,20 +434,20 @@ class FUFilebrowser(Screen):
+ 
+ 			<widget name="file_list" position="0,70" size="495,160" scrollbarMode="showOnDemand" />
+ 			<widget source="status" render="Label" position="0,230" zPosition="1" size="495,70" font="Regular;18" halign="center" valign="center" backgroundColor="#a08500" transparent="1" />
+-                </screen>
++		</screen>
+ 		"""
+ 
+ 	def __init__(self, session, parent, firmware):
+ 		Screen.__init__(self, session)
+-                self.session = session 
+-		
++		self.session = session 
++
+ 		self["key_blue"] = StaticText(_("Download"))
+ 
+ 		self["status"]    = StaticText(_(" "))
+ 		self["file_list"] = FileList("/", matchingPattern = "^.*")
+ 
+ 		self["actions"] = ActionMap(["OkCancelActions", "ShortcutActions", "WizardActions", "ColorActions", ],
+-                {
++			{
+ 			"ok":     self.onClickOk,
+ 			"cancel": self.onClickCancel,
+ 			"blue":   self.onClickBlue,
+@@ -474,9 +476,9 @@ class FUFilebrowser(Screen):
+ 		if self.downloadLock:
+ 			return
+ 
+-	        if self["file_list"].canDescent() : # isDir
+-	        	self["file_list"].descent()
+-        		return
++		if self["file_list"].canDescent(): # isDir
++			self["file_list"].descent()
++			return
+ 
+ 		# verify data
+ 		self.gbin = self["file_list"].getCurrentDirectory() + self["file_list"].getFilename()
+@@ -494,11 +496,11 @@ class FUFilebrowser(Screen):
+ 			if (self.firmware == "fp" and checkExt(".bin")) or (self.firmware == "fpga" and checkExt(".dat")) or (self.firmware == "vfd" and checkExt(".vfd")):
+ 				self.check_ext = True
+ 			if self.check_ext == False:
+-				print self.firmware,",",self["file_list"].getFilename()
++				print(self.firmware,",",self["file_list"].getFilename())
+ 				self.session.open(MessageBox, _("You choose the incorrect file. "), MessageBox.TYPE_INFO)
+ 				return
+ 		except:
+-			print self.firmware,",",self["file_list"].getFilename()
++			print(self.firmware,",",self["file_list"].getFilename())
+ 			self.session.open(MessageBox, _("You choose the incorrect file. "), MessageBox.TYPE_INFO)
+ 			return
+ 
+@@ -507,7 +509,7 @@ class FUFilebrowser(Screen):
+ 			return
+ 		md5sum_A = os.popen("md5sum %s | awk \'{print $1}\'"%(self.gbin)).readline().strip()
+ 		md5sum_B = os.popen("cat %s.md5 | awk \'{print $1}\'"%(self.gbin)).readline().strip()
+-		#print "[FirmwareUpgrade] - Verify : file[%s], md5[%s]"%(md5sum_A,md5sum_B)
++		#print("[FirmwareUpgrade] - Verify : file[%s], md5[%s]"%(md5sum_A,md5sum_B))
+ 
+ 		if md5sum_A != md5sum_B:
+ 			self.session.open(MessageBox, _("Fail to verify data file. \nfile[%s]\nmd5[%s]"%(md5sum_A,md5sum_B)), MessageBox.TYPE_INFO, timeout = 10)
+@@ -526,7 +528,7 @@ class FUFilebrowser(Screen):
+ 	# cbfunc(string) : callback function(function)
+ 	def doDownload(self, uri, tf, bd='/tmp', cbfunc=None, errmsg="Fail to download."):
+ 		tar = bd + "/" + tf
+-		#print "[FirmwareUpgrade] - Download Info : [%s][%s]" % (uri, tar)
++		#print("[FirmwareUpgrade] - Download Info : [%s][%s]" % (uri, tar))
+ 		def doHook(blockNumber, blockSize, totalSize) :
+ 			if blockNumber*blockSize > totalSize and cbfunc is not None:
+ 				cbfunc(tar)
+@@ -535,15 +537,15 @@ class FUFilebrowser(Screen):
+ 			opener.open(uri)
+ 		except:
+ 			#self.session.open(MessageBox, _("File not found in this URL:\n%s"%(uri)), MessageBox.TYPE_INFO, timeout = 10)
+-			print "[FirmwareUpgrade] - Fail to download. URL :",uri
++			print("[FirmwareUpgrade] - Fail to download. URL :",uri)
+ 			self.session.open(MessageBox, _(errmsg), MessageBox.TYPE_INFO, timeout = 10)
+ 			del opener
+ 			return False
+ 		try :
+ 			f, h = urlretrieve(uri, tar, doHook)
+-		except IOError, msg:
++		except IOError as msg:
+ 			#self.session.open(MessageBox, _(str(msg)), MessageBox.TYPE_INFO, timeout = 10)
+-			print "[FirmwareUpgrade] - Fail to download. ERR_MSG :",str(msg)
++			print("[FirmwareUpgrade] - Fail to download. ERR_MSG :",str(msg))
+ 			self.session.open(MessageBox, _(errmsg), MessageBox.TYPE_INFO, timeout = 10)
+ 			del opener
+ 			return False
+@@ -585,7 +587,7 @@ class FUFilebrowser(Screen):
+ 
+ 		self.guri = "%s/vu%s/%s"%(root_uri, machine, target_path)
+ 		self.gbin = os.path.basename(target_path)
+-		#print "[FirmwareUpgrade] - uri[%s], data[%s], data_path[%s]" % (self.gbin, self.guri, target_path)
++		#print("[FirmwareUpgrade] - uri[%s], data[%s], data_path[%s]" % (self.gbin, self.guri, target_path))
+ 		os.system("rm -f /tmp/" + root_file)
+ 
+ 		# md5
+@@ -663,12 +665,12 @@ class FirmwareUpgrade(Screen, ConfigListScreen):
+ 
+ 			<widget name="config" zPosition="2" position="0,70" itemHeight="36" size="540,40" scrollbarMode="showOnDemand" transparent="1" />
+ 			<widget source="status" render="Label" position="0,100" zPosition="1" size="540,75" font="Regular;20" halign="center" valign="center" />
+-                </screen>
++		</screen>
+ 		"""
+ 
+ 	def __init__(self, session): 
+ 		Screen.__init__(self, session)
+-                self.session = session 
++		self.session = session
+ 
+ 		self["shortcuts"] = ActionMap(["ShortcutActions", "SetupActions" ],
+ 		{
+@@ -766,7 +768,7 @@ class FirmwareUpgrade(Screen, ConfigListScreen):
+ 		device = None
+ 		for d in fwdata[self._item_firmware.value][2].split(';'):
+ 			if os.path.exists(d):
+-				device = d			
++				device = d
+ 		if device is None:
+ 			self.session.open(MessageBox, _("Can't found device file!!"), MessageBox.TYPE_INFO, timeout = 10)
+ 			return
+@@ -852,8 +854,8 @@ class FirmwareUpgrade(Screen, ConfigListScreen):
+ 		None
+ 
+ def main(session, **kwargs):
+-        session.open(FirmwareUpgrade)
+-                                                           
+-def Plugins(**kwargs):            
++		session.open(FirmwareUpgrade)
++
++def Plugins(**kwargs):
+ 	return PluginDescriptor(name=_("Firmware Upgrade"), description="Upgrade Firmware..", where = PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
+ 
+diff --git a/lib/python/Plugins/SystemPlugins/LEDBrightnessSetup/plugin.py b/lib/python/Plugins/SystemPlugins/LEDBrightnessSetup/plugin.py
+index 9d29a461..8c3a4620 100755
+--- a/lib/python/Plugins/SystemPlugins/LEDBrightnessSetup/plugin.py
++++ b/lib/python/Plugins/SystemPlugins/LEDBrightnessSetup/plugin.py
+@@ -1,3 +1,4 @@
++from __future__ import print_function
+ from Screens.Screen import Screen
+ from Components.ConfigList import ConfigListScreen
+ from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigSlider
+diff --git a/lib/python/Plugins/SystemPlugins/ManualFancontrol/InstandbyOn.py b/lib/python/Plugins/SystemPlugins/ManualFancontrol/InstandbyOn.py
+index fbb0e72f..6f4327c1 100755
+--- a/lib/python/Plugins/SystemPlugins/ManualFancontrol/InstandbyOn.py
++++ b/lib/python/Plugins/SystemPlugins/ManualFancontrol/InstandbyOn.py
+@@ -1,3 +1,4 @@
++from __future__ import print_function
+ from Components.config import config, ConfigSubList, ConfigSubsection
+ import NavigationInstance
+ from enigma import iRecordableService, eTimer, iPlayableService, eServiceCenter, iServiceInformation
+@@ -40,21 +41,21 @@ class instandbyOn:
+ 			if self.fanoffmode == 'ON':
+ 				self.checkStatusLoopStart()
+ 			config.misc.standbyCounter.addNotifier(self.standbyBegin, initial_call = False)
+-#		print "[ManualFancontrol] init :  self.fanoffmode : ", self.fanoffmode
+-#		print "[ManualFancontrol] init :  config.plugins.manualfancontrols.pwmvalue.value : ", config.plugins.manualfancontrols.pwmvalue.value
++#		print("[ManualFancontrol] init :  self.fanoffmode : ", self.fanoffmode)
++#		print("[ManualFancontrol] init :  config.plugins.manualfancontrols.pwmvalue.value : ", config.plugins.manualfancontrols.pwmvalue.value)
+ 
+ 	def checkStatusLoopStart(self):
+-#		print "[ManualFancontrol] checkStatusLoopStart"
++#		print("[ManualFancontrol] checkStatusLoopStart")
+ 		self.checkStstusTimer.start(int(config.plugins.manualfancontrols.checkperiod.value) * 1000)
+ 
+ 	def checkStatusLoopStop(self):
+-#		print "[ManualFancontrol] checkStatusLoopStop"
++#		print("[ManualFancontrol] checkStatusLoopStop")
+ 		self.checkStstusTimer.stop()
+ 
+ 	def checkStstus(self):
+ 		from Screens.Standby import inStandby
+-#		print "[ManualFancontrol] checkStstus, fanoffmode : %s, "%self.fanoffmode,"inStandby : ",inStandby and True or False
+-		if self.fanoffmode is 'ON' : # pwmvalue is '0'
++#		print("[ManualFancontrol] checkStstus, fanoffmode : %s, "%self.fanoffmode,"inStandby : ",inStandby and True or False)
++		if self.fanoffmode == 'ON' : # pwmvalue is '0'
+ 			if self.isRecording() or self.isHDDActive():
+ 				self.setPWM(self.minimum_pwm)
+ 			else:
+@@ -70,8 +71,8 @@ class instandbyOn:
+ 				self.setPWM(config.plugins.manualfancontrols.pwmvalue.value)
+ 
+ 	def standbyBegin(self, configElement):
+-#		print "[ManualFancontrol] Standby Begin"
+-		if config.plugins.manualfancontrols.standbymode.value == "yes" and self.fanoffmode is "OFF":
++#		print("[ManualFancontrol] Standby Begin")
++		if config.plugins.manualfancontrols.standbymode.value == "yes" and self.fanoffmode == "OFF":
+ 			from Screens.Standby import inStandby
+ 			inStandby.onClose.append(self.StandbyEnd)
+ 			self.addRecordEventCB()
+@@ -79,19 +80,19 @@ class instandbyOn:
+ 			self.checkStstus()
+ 
+ 	def StandbyEnd(self):
+-#		print "[ManualFancontrol] Standby End"
+-		if self.fanoffmode is "OFF":
++#		print("[ManualFancontrol] Standby End")
++		if self.fanoffmode == "OFF":
+ 			self.removeRecordEventCB()
+ 			self.checkStatusLoopStop()
+ 		self.checkStstus()
+ 
+ 	def addRecordEventCB(self):
+-#		print "[ManualFancontrol] addRecordEventCB"
++#		print("[ManualFancontrol] addRecordEventCB")
+ 		if self.getRecordEvent not in NavigationInstance.instance.record_event:
+ 			NavigationInstance.instance.record_event.append(self.getRecordEvent)
+ 
+ 	def removeRecordEventCB(self):
+-#		print "[ManualFancontrol] removeRecordEventCB"
++#		print("[ManualFancontrol] removeRecordEventCB")
+ 		if self.getRecordEvent in NavigationInstance.instance.record_event:
+ 			NavigationInstance.instance.record_event.remove(self.getRecordEvent)
+ 
+@@ -101,7 +102,7 @@ class instandbyOn:
+ 
+ 	def isRecording(self):
+ 		recordings = NavigationInstance.instance.getRecordings()
+-#		print "<ManualFancontrol_> recordings : ",len(recordings)
++#		print("<ManualFancontrol_> recordings : ",len(recordings))
+ 		if recordings :
+ 			return True
+ 		else:
+@@ -110,9 +111,9 @@ class instandbyOn:
+ 	def isHDDActive(self): # remake certainly
+ 		for hdd in harddiskmanager.HDDList():
+ 			if not hdd[1].isSleeping():
+-#				print "<ManualFancontrol_> %s is not Sleeping"%hdd[0]
++#				print("<ManualFancontrol_> %s is not Sleeping"%hdd[0])
+ 				return True
+-#		print "<ManualFancontrol_> All HDDs are Sleeping"
++#		print("<ManualFancontrol_> All HDDs are Sleeping")
+ 		return False
+ 
+ 	def getPWM(self):
+@@ -120,10 +121,10 @@ class instandbyOn:
+ 			f = open("/proc/stb/fp/fan_pwm", "r")
+ 			value = int(f.readline().strip(), 16)
+ 			f.close()
+-#			print "[ManualFancontrol] getPWM : %d "%value
++#			print("[ManualFancontrol] getPWM : %d "%value)
+ 			return value
+ 		except:
+-#			print "[ManualFancontrol] /proc/stb/fp/fan_pwm is not exist"
++#			print("[ManualFancontrol] /proc/stb/fp/fan_pwm is not exist")
+ 			return None
+ 
+ 	def setPWM(self, value):
+@@ -131,10 +132,10 @@ class instandbyOn:
+ 			f = open("/proc/stb/fp/fan_pwm", "w")
+ 			f.write("%x" % value)
+ 			f.close()
+-#			print "[ManualFancontrol] setPWM to : %d"%value
++#			print("[ManualFancontrol] setPWM to : %d"%value)
+ 		except:
+ 			pass
+-#			print "[ManualFancontrol] /proc/stb/fp/fan_pwm is not exist"
++#			print("[ManualFancontrol] /proc/stb/fp/fan_pwm is not exist")
+ 
+ 	def check_fan_pwm(self):
+ 		from os import access, F_OK
+diff --git a/lib/python/Plugins/SystemPlugins/ManualFancontrol/plugin.py b/lib/python/Plugins/SystemPlugins/ManualFancontrol/plugin.py
+index f2da6018..48e556ef 100755
+--- a/lib/python/Plugins/SystemPlugins/ManualFancontrol/plugin.py
++++ b/lib/python/Plugins/SystemPlugins/ManualFancontrol/plugin.py
+@@ -1,3 +1,4 @@
++from __future__ import print_function
+ from Screens.Screen import Screen
+ from Components.ConfigList import ConfigListScreen
+ from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigSelection, ConfigInteger
+@@ -40,7 +41,7 @@ class ManualFancontrol(Screen,ConfigListScreen):
+ 		self["current"] = StaticText(_(" "))
+ 		self.configSetup()
+ 		self.oldfanoffmode = instandbyon.fanoffmode
+-		if instandbyon.fanoffmode is 'ON' :
++		if instandbyon.fanoffmode == 'ON' :
+ 			instandbyon.checkStatusLoopStop()
+ 		self.checkFanTimer = eTimer()
+ 		self.checkFanTimer.callback.append(self.fan_pwm_error)
+@@ -56,7 +57,7 @@ class ManualFancontrol(Screen,ConfigListScreen):
+ 	def displayCurrentValue(self):
+ 		currrent_val = self["config"].getCurrent()[0]+" : "+str(self["config"].getCurrent()[1].value)
+ 		self["current"].setText(_(currrent_val))
+-#		print currrent_val
++#		print(currrent_val)
+ 
+ 	def selectionChanged(self):
+ 		if self["config"].getCurrent() == self.pwmEntry:
+@@ -100,17 +101,17 @@ class ManualFancontrol(Screen,ConfigListScreen):
+ 		self.createSetup()
+ 
+ 	def keySave(self):
+-		if instandbyon.fanoffmode is 'OFF' and config.plugins.manualfancontrols.pwmvalue.value == 0:
+-#			print "[ManualFancontrol] instandbyon.fanoffmode 'OFF' -> 'ON'"
++		if instandbyon.fanoffmode == 'OFF' and config.plugins.manualfancontrols.pwmvalue.value == 0:
++#			print("[ManualFancontrol] instandbyon.fanoffmode 'OFF' -> 'ON'")
+ 			instandbyon.fanoffmode = 'ON'
+ 			instandbyon.addRecordEventCB()
+ 			instandbyon.checkStatusLoopStart()
+-		elif instandbyon.fanoffmode is 'ON' and config.plugins.manualfancontrols.pwmvalue.value != 0:
+-#			print "[ManualFancontrol] instandbyon.fanoffmode 'ON' -> 'OFF'"
++		elif instandbyon.fanoffmode == 'ON' and config.plugins.manualfancontrols.pwmvalue.value != 0:
++#			print("[ManualFancontrol] instandbyon.fanoffmode 'ON' -> 'OFF'")
+ 			instandbyon.fanoffmode = 'OFF'
+ 			instandbyon.removeRecordEventCB()
+ #			instandbyon.checkStatusLoopStop() # stoped at init
+-		elif self.oldfanoffmode is 'ON' :
++		elif self.oldfanoffmode == 'ON' :
+ 			instandbyon.checkStatusLoopStart()
+ 		instandbyon.checkStstus()
+ 		ConfigListScreen.keySave(self)
+@@ -122,7 +123,7 @@ class ManualFancontrol(Screen,ConfigListScreen):
+ 			x[1].cancel()
+ 		instandbyon.checkStstus()
+ 		self.oldfanoffmode = instandbyon.fanoffmode
+-		if self.oldfanoffmode is 'ON' :
++		if self.oldfanoffmode == 'ON' :
+ 			instandbyon.checkStatusLoopStart()
+ 		self.close()
+ 
+diff --git a/lib/python/Plugins/SystemPlugins/RemoteControlCode/plugin.py b/lib/python/Plugins/SystemPlugins/RemoteControlCode/plugin.py
+index 19cc6103..ee38a11a 100755
+--- a/lib/python/Plugins/SystemPlugins/RemoteControlCode/plugin.py
++++ b/lib/python/Plugins/SystemPlugins/RemoteControlCode/plugin.py
+@@ -1,3 +1,4 @@
++from __future__ import print_function
+ from Screens.Screen import Screen
+ from Components.ConfigList import ConfigListScreen
+ from Components.config import config, getConfigListEntry, ConfigSubsection, ConfigSelection, ConfigInteger
+@@ -20,7 +21,7 @@ class RemoteControlCodeInit:
+ 	def setSystemCode(self, type = 2):
+ 		if not fileExists("/proc/stb/fp/remote_code"):
+ 			return -1
+-		print "<RemoteControlCode> Write Remote Control Code : %d" % type
++		print("<RemoteControlCode> Write Remote Control Code : %d" % type)
+ 		f = open("/proc/stb/fp/remote_code", "w")
+ 		f.write("%d" % type)
+ 		f.close()
+@@ -92,7 +93,7 @@ class RemoteControlCode(Screen,ConfigListScreen,RemoteControlCodeInit):
+ 		self["config"].l.setList(self.list)
+ 
+ 	def keySave(self):
+-		print "<RemoteControlCode> Selected System Code : ",config.plugins.remotecontrolcode.systemcode.value
++		print("<RemoteControlCode> Selected System Code : ",config.plugins.remotecontrolcode.systemcode.value)
+ 		ret = self.setSystemCode(int(config.plugins.remotecontrolcode.systemcode.value))
+ 		if ret == -1:
+ 			self.restoreCode()
+diff --git a/lib/python/Plugins/newplugin.py b/lib/python/Plugins/newplugin.py
+index 32c7269d..3f97bc28 100755
+--- a/lib/python/Plugins/newplugin.py
++++ b/lib/python/Plugins/newplugin.py
+@@ -1,4 +1,5 @@
+ #!/usr/bin/python
++from __future__ import print_function
+ 
+ import os
+ 
+@@ -41,17 +42,17 @@ stop = False
+ 
+ while not stop:
+ 	os.system("clear")
+-	print "selected targets:"
++	print("selected targets:")
+ 	for where in targetlist:
+ 		print where[0]
+ 	
+-	print
+-	print "available targets:"
++	print()
++	print("available targets:")
+ 	count = 0
+ 	for where in wherelist:
+ 		count += 1
+-		print count, where[0]
+-	print "x break"
++		print(count, where[0])
++	print("x break")
+ 		
+ 	target = raw_input("Select WHERE-target: ")
+ 	if target == "x":
+@@ -78,7 +79,7 @@ makefile.write(lines)
+ makefile.close()
+ 
+ lines = []
+-print "open"
++print("open")
+ configure = open("../../../configure.ac", "r")
+ while True:
+ 	line = configure.readline()
+@@ -88,7 +89,7 @@ while True:
+ 	if line.strip() == "lib/python/Plugins/" + category + "/Makefile":
+ 		lines.append("lib/python/Plugins/" + pluginpath + "/Makefile\n")
+ configure.close()
+-print "close"
++print("close")
+ 
+ configure = open("../../../configure.ac", "w")
+ configure.writelines(lines)
+@@ -121,7 +122,7 @@ descriptorlist = []
+ for count in range(len(targetlist)):
+ 	os.system("clear")
+ 	where = targetlist[count]
+-	print "Options for target %s" % where[0]
++	print("Options for target %s" % where[0])
+ 	descriptorlist.append(where[1](name, mainlist[count]))
+ 	
+ if len(descriptorlist) == 1:
+--
+libgit2 1.3.0
+

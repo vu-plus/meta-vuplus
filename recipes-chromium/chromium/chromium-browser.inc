@@ -10,8 +10,8 @@ SRC_URI = "http://code.vuplus.com/download/chromium/chromium-vuplus_${MACHINE}_$
 # Added to support the OE-Alliance.
 #PREFERRED_VERSION_nss = "3.17.3"
 
-#DEPENDS = "nss python-subprocess libxslt"
-RDEPENDS_${PN} = "nspr nss python-subprocess libxslt"
+#DEPENDS = "nss libxslt"
+RDEPENDS_${PN} = "libcrypto-compat nspr nss libxslt libudev libcurl"
 
 do_install() {
 	install -d ${D}/usr/local/chromium

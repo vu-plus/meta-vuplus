@@ -1,14 +1,14 @@
 DESCRIPTION = "Vuplus bluetooth plugin"
 
-inherit pythonnative
+inherit python3native
 
 LICENSE = "CLOSED"
 
-DEPENDS = "python-native"
+DEPENDS = "python3-native"
 RDEPENDS_${PN} = "vuplus-bluetooth-util libusb-compat"
 
 PN = "enigma2-plugin-systemplugins-bluetoothsetup"
-PR = "${SRCDATE}.${SRCDATE_PR}"
+PR = "${SRCDATE}-py3.${SRCDATE_PR}"
 
 SRC_URI = " \
     http://code.vuplus.com/download/release/bt/enigma2-plugin-bluetoothsetup-${MACHINE}-${PR}.tar.gz \
@@ -19,7 +19,7 @@ S = "${WORKDIR}/plugin"
 BLUETOOTH_PLUGIN_PATH = "/usr/lib/enigma2/python/Plugins/SystemPlugins/BluetoothSetup"
 
 do_compile() {
-	python -O -m compileall ${S}
+	python3 -O -m compileall ${S}
 }
 
 do_install() {
@@ -28,6 +28,7 @@ do_install() {
 }
 
 FILES_${PN} = "${BLUETOOTH_PLUGIN_PATH}"
+FILES_${PN}-src = "${BLUETOOTH_PLUGIN_PATH}/*.py"
 
 #do_populate_sysroot[noexec] = "1"
 

@@ -3,10 +3,14 @@ SECTION = "base"
 PRIORITY = "required"
 LICENSE = "CLOSED"
 
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
+
 PV = "1.0"
 PR = "20170324_r0"
 SRC_URI = "http://code.vuplus.com/download/chromium/e2plugin-chromium-vuplus_${PR}.tar.gz"
-
+SRC_URI_append = " \
+           file://port-to-python3.patch"
+           
 #DEPENDS_${PN} = "chromium-browser"
 RDEPENDS_${PN} = "chromium-browser"
 

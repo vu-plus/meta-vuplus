@@ -32,24 +32,28 @@ do_install_prepend() {
 	cp -a ${S}/opengl/GLES2/* ${S}/include/GLES2/
 }
 
+
+INHIBIT_PACKAGE_STRIP = "1"
+PRIVATE_LIBS_${PN} = "libEGL.so \
+libv3ddriver.so \
+libGLESv2.so"
+
 do_install() {
 	install -d ${D}${libdir}
 	install -m 0755 ${S}/lib/*.so ${D}${libdir}
 	ln -s libv3ddriver.so ${D}${libdir}/libEGL.so
 	ln -s libv3ddriver.so ${D}${libdir}/libGLESv2.so
-
 	install -d ${D}${includedir}
 	cp -a ${S}/include/* ${D}${includedir}/
 }
 
-INHIBIT_PACKAGE_STRIP = "1"
-INHIBIT_SYSROOT_STRIP = "1"
-INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+do_package_qa() {
+}
 
-SOLIBS = ".so"
-FILES_SOLIBSDEV = ""
+FILES:${PN} = "/usr/lib/*"
+FILES:${PN}-dev = "/usr/include/*"
 
 # skip the check: we purposedly have two symlinks in the main package
-INSANE_SKIP_${PN} = "dev-so"
+INSANE_SKIP_${PN} += "already-stripped dev-so ldflags"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/vuplus-libgles:"

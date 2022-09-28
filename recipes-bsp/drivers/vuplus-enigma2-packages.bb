@@ -3,12 +3,12 @@ DESCRIPTION = "Vuplus Specific plugins"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=c9e255efa454e0155c1fd758df7dcaf3"
 
-DEPENDS = "python-native"
+DEPENDS = "python3-native"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 SRCREV = "b0fb2521cedeac8089de73c3b59fd15bda0e99e0"
-inherit gitpkgv pythonnative
+inherit gitpkgv python3native
  
 PV = "experimental-git${SRCPV}"
 PKGV = "experimental-git${GITPKGV}"
@@ -16,6 +16,7 @@ PR = "r6"
 BRANCH = "vuplus_experimental"
 
 SRC_URI = "git://code.vuplus.com/git/dvbapp.git;protocol=http;branch=${BRANCH};tag=${SRCREV} \
+           file://0001-fix-compile-python3.patch \
 "
 
 S = "${WORKDIR}/git"
@@ -43,7 +44,7 @@ do_install() {
 	install -m 0644 ${S}/lib/python/Plugins/SystemPlugins/LEDBrightnessSetup/*.py \
 	${D}/usr/lib/enigma2/python/Plugins/SystemPlugins/LEDBrightnessSetup
 	
-	python -O -m compileall ${D}/usr/lib/enigma2/python/Plugins/
+	python3 -O -m compileall ${D}/usr/lib/enigma2/python/Plugins/
 }
 
 FILES_enigma2-plugin-systemplugins-manualfancontrol = "/usr/lib/enigma2/python/Plugins/SystemPlugins/ManualFancontrol"
